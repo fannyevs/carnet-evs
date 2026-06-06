@@ -6,322 +6,315 @@
 <title>Le Carnet de Route — En Vie de Sens</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
-  --teal:#1a7a6e;--teal-light:#2a9d8f;--teal-pale:#e8f5f3;--teal-dark:#0f4f47;
-  --gold:#c99b4b;--gold-light:#f0ddb0;--gold-pale:#fdf8ee;--cream:#faf8f4;
-  --white:#ffffff;--ink:#1c1c1c;--ink-mid:#4a4a4a;--ink-light:#8a8a8a;
-  --border:#e2ddd8;--shadow:0 4px 24px rgba(26,122,110,0.10);
-  --shadow-sm:0 2px 8px rgba(0,0,0,0.07);--radius:16px;--radius-sm:10px;
+  --teal: #1a7a6e; --teal-light: #2a9d8f; --teal-pale: #e8f5f3; --teal-dark: #0f4f47;
+  --gold: #c99b4b; --gold-light: #f0ddb0; --gold-pale: #fdf8ee;
+  --cream: #faf8f4; --white: #ffffff; --ink: #1c1c1c; --ink-mid: #4a4a4a; --ink-light: #8a8a8a;
+  --border: #e2ddd8; --shadow: 0 4px 24px rgba(26,122,110,0.10); --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+  --radius: 16px; --radius-sm: 10px;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
 
-/* GATE */
-#gate{position:fixed;inset:0;background:linear-gradient(135deg,var(--teal-dark) 0%,var(--teal) 50%,#2a9d8f 100%);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px;}
-#gate.hidden{display:none;}
-.gate-card{background:var(--white);border-radius:24px;padding:48px 40px;max-width:480px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,0.25);position:relative;overflow:hidden;}
-.gate-card::before{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:var(--teal-pale);border-radius:50%;}
-.gate-badge{display:inline-block;background:var(--gold-pale);color:var(--gold);font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:20px;}
-.gate-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:var(--teal-dark);line-height:1.15;margin-bottom:8px;}
-.gate-subtitle{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--gold);margin-bottom:16px;}
-.gate-desc{font-size:14px;color:var(--ink-mid);line-height:1.7;margin-bottom:20px;}
-.gate-tabs{display:flex;gap:0;margin-bottom:20px;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;}
-.gate-tab{flex:1;padding:12px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:var(--cream);color:var(--ink-mid);font-family:'DM Sans',sans-serif;transition:all 0.2s;}
-.gate-tab.active{background:var(--teal);color:white;}
-.gate-form{display:flex;flex-direction:column;gap:12px;}
-.gate-input{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--cream);transition:border-color 0.2s;outline:none;}
-.gate-input:focus{border-color:var(--teal);}
-.gate-input::placeholder{color:var(--ink-light);}
-.gate-btn{background:linear-gradient(135deg,var(--teal) 0%,var(--teal-light) 100%);color:white;border:none;border-radius:var(--radius-sm);padding:16px;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
-.gate-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,122,110,0.35);}
-.gate-btn:disabled{opacity:0.7;transform:none;cursor:not-allowed;}
-.gate-error{background:#fdeaea;border:1px solid #e74c3c;border-radius:8px;padding:10px 14px;font-size:13px;color:#c0392b;display:none;}
-.gate-error.show{display:block;}
-.gate-legal{font-size:11px;color:var(--ink-light);margin-top:12px;}
-.gate-perks{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;text-align:left;}
-.gate-perk{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-mid);}
-.gate-perk-icon{width:24px;height:24px;background:var(--teal-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+/* ─── GATE ─── */
+#gate { position: fixed; inset: 0; background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 50%, #2a9d8f 100%); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+#gate.hidden { display: none; }
+.gate-card { background: var(--white); border-radius: 24px; padding: 48px 40px; max-width: 480px; width: 100%; text-align: center; box-shadow: 0 32px 80px rgba(0,0,0,0.25); position: relative; overflow: hidden; }
+.gate-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 180px; height: 180px; background: var(--teal-pale); border-radius: 50%; }
+.gate-badge { display: inline-block; background: var(--gold-pale); color: var(--gold); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 20px; }
+.gate-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 700; color: var(--teal-dark); line-height: 1.15; margin-bottom: 8px; }
+.gate-subtitle { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--gold); margin-bottom: 16px; }
+.gate-tabs { display: flex; gap: 0; margin-bottom: 24px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.gate-tab-btn { flex: 1; padding: 12px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: var(--cream); color: var(--ink-light); font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+.gate-tab-btn.active { background: var(--teal); color: white; }
+.gate-perks { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; text-align: left; }
+.gate-perk { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-mid); }
+.gate-perk-icon { width: 24px; height: 24px; background: var(--teal-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.gate-form { display: flex; flex-direction: column; gap: 12px; }
+.gate-input { border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: var(--cream); transition: border-color 0.2s; outline: none; }
+.gate-input:focus { border-color: var(--teal); }
+.gate-input::placeholder { color: var(--ink-light); }
+.gate-btn { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%); color: white; border: none; border-radius: var(--radius-sm); padding: 16px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.gate-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,122,110,0.35); }
+.gate-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+.gate-legal { font-size: 11px; color: var(--ink-light); margin-top: 12px; }
+.gate-error { background: #fdeaea; border: 1px solid #e74c3c; color: #c0392b; border-radius: 8px; padding: 10px 14px; font-size: 13px; display: none; }
+.gate-error.visible { display: block; }
 
-/* APP */
-#app{display:none;}
-#app.visible{display:block;}
+/* ─── APP ─── */
+#app { display: none; }
+#app.visible { display: block; }
+.app-header { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 0 24px; }
+.header-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.header-logo { display: flex; align-items: center; gap: 10px; }
+.logo-dot { width: 32px; height: 32px; background: linear-gradient(135deg, var(--teal), var(--teal-light)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 14px; }
+.logo-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 700; color: var(--teal-dark); }
+.logo-sub { font-size: 10px; color: var(--ink-light); letter-spacing: 0.1em; text-transform: uppercase; }
+.header-progress { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-mid); }
+.progress-bar-mini { width: 100px; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-bar-mini-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold)); border-radius: 3px; transition: width 0.5s ease; }
+.header-user { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-mid); }
+.user-avatar { width: 30px; height: 30px; background: var(--gold-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 12px; font-weight: 600; }
+.logout-btn { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 11px; color: var(--ink-light); cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; margin-left: 4px; }
+.logout-btn:hover { border-color: var(--teal); color: var(--teal); }
+.app-nav { background: var(--white); border-bottom: 1px solid var(--border); overflow-x: auto; }
+.nav-inner { max-width: 900px; margin: 0 auto; display: flex; gap: 0; padding: 0 24px; }
+.nav-tab { padding: 14px 18px; font-size: 13px; font-weight: 500; color: var(--ink-light); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.nav-tab:hover { color: var(--teal); }
+.nav-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+.app-main { max-width: 900px; margin: 0 auto; padding: 32px 24px 80px; }
 
-/* HEADER */
-.app-header{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;padding:0 24px;}
-.header-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;}
-.header-logo{display:flex;align-items:center;gap:10px;}
-.logo-dot{width:32px;height:32px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:14px;}
-.logo-text{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:var(--teal-dark);}
-.logo-sub{font-size:10px;color:var(--ink-light);letter-spacing:0.1em;text-transform:uppercase;}
-.header-progress{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-mid);}
-.progress-bar-mini{width:100px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
-.progress-bar-mini-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--gold));border-radius:3px;transition:width 0.5s ease;}
-.header-user{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-mid);}
-.user-avatar{width:30px;height:30px;background:var(--gold-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:12px;font-weight:600;}
-.logout-btn{background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--ink-light);cursor:pointer;font-family:'DM Sans',sans-serif;}
-.logout-btn:hover{border-color:var(--teal);color:var(--teal);}
-
-/* SAVING INDICATOR */
-.save-indicator{position:fixed;bottom:20px;right:20px;background:var(--teal-dark);color:white;padding:8px 16px;border-radius:20px;font-size:12px;opacity:0;transition:opacity 0.3s;z-index:999;}
-.save-indicator.show{opacity:1;}
-
-/* NAV */
-.app-nav{background:var(--white);border-bottom:1px solid var(--border);overflow-x:auto;}
-.nav-inner{max-width:900px;margin:0 auto;display:flex;gap:0;padding:0 24px;}
-.nav-tab{padding:14px 18px;font-size:13px;font-weight:500;color:var(--ink-light);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
-.nav-tab:hover{color:var(--teal);}
-.nav-tab.active{color:var(--teal);border-bottom-color:var(--teal);}
-
-/* MAIN */
-.app-main{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+/* SAVE INDICATOR */
+.save-indicator { position: fixed; bottom: 24px; right: 24px; background: var(--teal-dark); color: white; border-radius: 20px; padding: 8px 16px; font-size: 12px; opacity: 0; transition: opacity 0.3s; z-index: 500; }
+.save-indicator.visible { opacity: 1; }
 
 /* DASHBOARD */
-.dashboard-hero{background:linear-gradient(135deg,var(--teal-dark) 0%,var(--teal) 60%,var(--teal-light) 100%);border-radius:24px;padding:40px;color:white;margin-bottom:32px;position:relative;overflow:hidden;}
-.dashboard-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:rgba(255,255,255,0.06);border-radius:50%;}
-.hero-greeting{font-size:13px;letter-spacing:0.1em;text-transform:uppercase;opacity:0.75;margin-bottom:8px;}
-.hero-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:700;line-height:1.1;margin-bottom:8px;}
-.hero-sub{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;opacity:0.8;margin-bottom:28px;}
-.hero-progress-label{font-size:13px;opacity:0.8;margin-bottom:8px;}
-.hero-progress-bar{height:8px;background:rgba(255,255,255,0.2);border-radius:4px;overflow:hidden;margin-bottom:6px;}
-.hero-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold-light),var(--gold));border-radius:4px;transition:width 0.8s ease;}
-.hero-progress-pct{font-size:28px;font-weight:700;color:var(--gold-light);}
-.cloud-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border-radius:20px;padding:6px 14px;font-size:12px;margin-top:12px;}
+.dashboard-hero { background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 60%, var(--teal-light) 100%); border-radius: 24px; padding: 40px; color: white; margin-bottom: 32px; position: relative; overflow: hidden; }
+.dashboard-hero::before { content: ''; position: absolute; top: -40px; right: -40px; width: 200px; height: 200px; background: rgba(255,255,255,0.06); border-radius: 50%; }
+.hero-greeting { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; margin-bottom: 8px; }
+.hero-title { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 700; line-height: 1.1; margin-bottom: 8px; }
+.hero-sub { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; opacity: 0.8; margin-bottom: 28px; }
+.hero-progress-label { font-size: 13px; opacity: 0.8; margin-bottom: 8px; }
+.hero-progress-bar { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; margin-bottom: 6px; }
+.hero-progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold-light), var(--gold)); border-radius: 4px; transition: width 0.8s ease; }
+.hero-progress-pct { font-size: 28px; font-weight: 700; color: var(--gold-light); }
 
-/* MODULE GRID */
-.module-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-bottom:32px;}
-.module-card{background:var(--white);border-radius:var(--radius);padding:24px;cursor:pointer;border:1.5px solid var(--border);transition:all 0.25s;position:relative;overflow:hidden;}
-.module-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:var(--shadow);}
-.module-card.completed{border-color:var(--gold);}
-.module-num{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
-.module-card.completed .module-num{color:var(--gold);}
-.module-card-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--teal-dark);margin-bottom:4px;}
-.module-card-sub{font-size:12px;color:var(--ink-light);margin-bottom:16px;}
-.module-card-progress{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
-.module-card-fill{height:100%;background:var(--teal);border-radius:2px;transition:width 0.5s ease;}
-.module-card.completed .module-card-fill{background:var(--gold);}
-.module-card-pct{font-size:11px;color:var(--ink-light);margin-top:6px;}
-.module-emoji{position:absolute;top:20px;right:20px;font-size:28px;opacity:0.15;}
+/* AVIS GOOGLE BANNER */
+.google-banner { display: flex; align-items: center; justify-content: space-between; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 32px; gap: 16px; }
+.google-banner-left { display: flex; align-items: center; gap: 14px; }
+.google-stars { font-size: 20px; letter-spacing: 2px; }
+.google-text-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+.google-text-sub { font-size: 12px; color: var(--ink-light); }
+.google-btn { background: #4285F4; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; font-family: 'DM Sans', sans-serif; text-decoration: none; display: inline-block; transition: all 0.2s; }
+.google-btn:hover { background: #3367D6; transform: translateY(-1px); }
 
-/* QUOTE */
-.quote-card{background:var(--gold-pale);border:1.5px solid var(--gold-light);border-radius:var(--radius);padding:28px 32px;margin-bottom:32px;position:relative;}
-.quote-mark{font-family:'Cormorant Garamond',serif;font-size:72px;color:var(--gold-light);line-height:0.5;position:absolute;top:20px;left:24px;}
-.quote-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--teal-dark);line-height:1.6;padding-left:24px;}
-.quote-author{font-size:12px;color:var(--gold);font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-top:12px;padding-left:24px;}
+.module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-bottom: 32px; }
+.module-card { background: var(--white); border-radius: var(--radius); padding: 24px; cursor: pointer; border: 1.5px solid var(--border); transition: all 0.25s; position: relative; overflow: hidden; }
+.module-card:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: var(--shadow); }
+.module-card.completed { border-color: var(--gold); }
+.module-num { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+.module-card.completed .module-num { color: var(--gold); }
+.module-card-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--teal-dark); margin-bottom: 4px; }
+.module-card-sub { font-size: 12px; color: var(--ink-light); margin-bottom: 16px; }
+.module-card-progress { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.module-card-fill { height: 100%; background: var(--teal); border-radius: 2px; transition: width 0.5s ease; }
+.module-card.completed .module-card-fill { background: var(--gold); }
+.module-card-pct { font-size: 11px; color: var(--ink-light); margin-top: 6px; }
+.module-emoji { position: absolute; top: 20px; right: 20px; font-size: 28px; opacity: 0.15; }
 
-/* MODULE VIEW */
-.module-view{display:none;}
-.module-view.active{display:block;}
-.module-header{background:linear-gradient(135deg,var(--teal-dark),var(--teal));border-radius:20px;padding:36px 40px;color:white;margin-bottom:28px;position:relative;overflow:hidden;}
-.module-header::after{content:attr(data-emoji);position:absolute;right:40px;top:50%;transform:translateY(-50%);font-size:64px;opacity:0.15;}
-.mod-label{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;opacity:0.7;margin-bottom:6px;}
-.mod-title{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;margin-bottom:6px;}
-.mod-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;opacity:0.8;}
-.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--teal);font-size:13px;font-weight:500;cursor:pointer;margin-bottom:20px;padding:0;font-family:'DM Sans',sans-serif;}
-.back-btn:hover{color:var(--teal-dark);}
+.quote-card { background: var(--gold-pale); border: 1.5px solid var(--gold-light); border-radius: var(--radius); padding: 28px 32px; margin-bottom: 32px; position: relative; }
+.quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 72px; color: var(--gold-light); line-height: 0.5; position: absolute; top: 20px; left: 24px; }
+.quote-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: var(--teal-dark); line-height: 1.6; padding-left: 24px; }
+.quote-author { font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 12px; padding-left: 24px; }
 
-/* SECTION */
-.section-block{margin-bottom:28px;}
-.section-label{font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.section-label::after{content:'';flex:1;height:1px;background:var(--gold-light);}
+.module-view { display: none; }
+.module-view.active { display: block; }
+.module-header { background: linear-gradient(135deg, var(--teal-dark), var(--teal)); border-radius: 20px; padding: 36px 40px; color: white; margin-bottom: 28px; position: relative; overflow: hidden; }
+.module-header::after { content: attr(data-emoji); position: absolute; right: 40px; top: 50%; transform: translateY(-50%); font-size: 64px; opacity: 0.15; }
+.mod-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-bottom: 6px; }
+.mod-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 700; margin-bottom: 6px; }
+.mod-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 17px; opacity: 0.8; }
+.back-btn { display: inline-flex; align-items: center; gap: 6px; background: none; border: none; color: var(--teal); font-size: 13px; font-weight: 500; cursor: pointer; margin-bottom: 20px; padding: 0; font-family: 'DM Sans', sans-serif; }
+.back-btn:hover { color: var(--teal-dark); }
 
-/* CHECKLIST */
-.checklist{display:flex;flex-direction:column;gap:10px;}
-.check-item{display:flex;align-items:flex-start;gap:12px;background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;cursor:pointer;transition:all 0.2s;}
-.check-item:hover{border-color:var(--teal-light);background:var(--teal-pale);}
-.check-item.checked{border-color:var(--gold);background:var(--gold-pale);}
-.check-box{width:20px;height:20px;min-width:20px;border:2px solid var(--border);border-radius:5px;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;font-size:11px;}
-.check-item.checked .check-box{background:var(--gold);border-color:var(--gold);color:white;}
-.check-label{font-size:14px;color:var(--ink);line-height:1.5;}
-.check-item.checked .check-label{color:var(--ink-mid);text-decoration:line-through;}
+.section-block { margin-bottom: 28px; }
+.section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--gold-light); }
 
-/* INFO/TIP BOXES */
-.info-box{background:var(--teal-pale);border-left:4px solid var(--teal);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:18px 20px;font-size:14px;color:var(--teal-dark);line-height:1.7;margin-bottom:16px;}
-.tip-box{background:var(--gold-pale);border-left:4px solid var(--gold);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:18px 20px;font-size:14px;color:var(--ink-mid);line-height:1.7;}
-.tip-box-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.checklist { display: flex; flex-direction: column; gap: 10px; }
+.check-item { display: flex; align-items: flex-start; gap: 12px; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; cursor: pointer; transition: all 0.2s; }
+.check-item:hover { border-color: var(--teal-light); background: var(--teal-pale); }
+.check-item.checked { border-color: var(--gold); background: var(--gold-pale); }
+.check-box { width: 20px; height: 20px; min-width: 20px; border: 2px solid var(--border); border-radius: 5px; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 11px; }
+.check-item.checked .check-box { background: var(--gold); border-color: var(--gold); color: white; }
+.check-label { font-size: 14px; color: var(--ink); line-height: 1.5; }
+.check-item.checked .check-label { color: var(--ink-mid); text-decoration: line-through; }
 
-/* FORMS */
-.form-grid{display:grid;gap:12px;}
-.form-grid-2{grid-template-columns:1fr 1fr;}
-.form-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;}
-.form-card-title{font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;}
-.field-group{margin-bottom:14px;}
-.field-label{font-size:12px;color:var(--ink-light);margin-bottom:5px;display:block;}
-.field-input,.field-textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);background:var(--cream);outline:none;transition:border-color 0.2s;}
-.field-input:focus,.field-textarea:focus{border-color:var(--teal);background:var(--white);}
-.field-textarea{min-height:80px;resize:vertical;}
+.info-box { background: var(--teal-pale); border-left: 4px solid var(--teal); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 18px 20px; font-size: 14px; color: var(--teal-dark); line-height: 1.7; margin-bottom: 16px; }
+.tip-box { background: var(--gold-pale); border-left: 4px solid var(--gold); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 18px 20px; font-size: 14px; color: var(--ink-mid); line-height: 1.7; }
+.tip-box-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
 
-/* COMPARISON */
-.comparison-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.compare-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;}
-.compare-card.featured{border-color:var(--teal);}
-.compare-badge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:12px;}
-.badge-teal{background:var(--teal-pale);color:var(--teal);}
-.badge-gold{background:var(--gold-pale);color:var(--gold);}
-.badge-grey{background:#f0f0f0;color:var(--ink-mid);}
-.compare-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--teal-dark);margin-bottom:14px;}
-.compare-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
-.compare-list li{font-size:12px;color:var(--ink-mid);display:flex;gap:7px;align-items:flex-start;}
-.compare-list li::before{content:'→';color:var(--teal);flex-shrink:0;}
+/* PHARMACOVIGILANCE BOX */
+.pharma-box { background: #fdeaea; border: 1.5px solid #e74c3c; border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
+.pharma-box-title { font-size: 14px; font-weight: 700; color: #c0392b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.pharma-box-desc { font-size: 13px; color: var(--ink-mid); line-height: 1.7; margin-bottom: 16px; }
+.pharma-steps { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.pharma-step { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--ink-mid); }
+.pharma-step-num { width: 22px; height: 22px; min-width: 22px; background: #e74c3c; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+.pharma-link { display: inline-flex; align-items: center; gap: 6px; background: #e74c3c; color: white; border: none; border-radius: 8px; padding: 10px 18px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+.pharma-link:hover { background: #c0392b; }
 
-/* STEPS */
-.steps-list{display:flex;flex-direction:column;gap:0;}
-.step-item{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--border);}
-.step-item:last-child{border-bottom:none;}
-.step-num{width:32px;height:32px;min-width:32px;background:var(--teal);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
-.step-content{flex:1;}
-.step-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px;}
-.step-desc{font-size:13px;color:var(--ink-mid);line-height:1.5;}
+.form-grid { display: grid; gap: 12px; }
+.form-grid-2 { grid-template-columns: 1fr 1fr; }
+.form-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 24px; }
+.form-card-title { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
+.field-group { margin-bottom: 14px; }
+.field-label { font-size: 12px; color: var(--ink-light); margin-bottom: 5px; display: block; }
+.field-input, .field-textarea { width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 13px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink); background: var(--cream); outline: none; transition: border-color 0.2s; }
+.field-input:focus, .field-textarea:focus { border-color: var(--teal); background: var(--white); }
+.field-textarea { min-height: 80px; resize: vertical; }
 
-/* FAQ */
-.faq-item{border:1.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:10px;}
-.faq-q{background:var(--white);padding:16px 20px;font-size:14px;font-weight:600;color:var(--teal-dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;}
-.faq-q:hover{background:var(--teal-pale);}
-.faq-icon{color:var(--teal);font-size:18px;transition:transform 0.2s;}
-.faq-a{display:none;padding:16px 20px;font-size:13px;color:var(--ink-mid);line-height:1.7;background:var(--cream);border-top:1px solid var(--border);}
-.faq-a.open{display:block;}
-.faq-icon.open{transform:rotate(45deg);}
+.comparison-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.compare-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 22px; }
+.compare-card.featured { border-color: var(--teal); }
+.compare-badge { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 12px; }
+.badge-teal { background: var(--teal-pale); color: var(--teal); }
+.badge-gold { background: var(--gold-pale); color: var(--gold); }
+.badge-grey { background: #f0f0f0; color: var(--ink-mid); }
+.compare-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--teal-dark); margin-bottom: 14px; }
+.compare-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+.compare-list li { font-size: 12px; color: var(--ink-mid); display: flex; gap: 7px; align-items: flex-start; }
+.compare-list li::before { content: '→'; color: var(--teal); flex-shrink: 0; }
 
-/* TABLES */
-.table-wrap{border-radius:var(--radius-sm);overflow:hidden;border:1.5px solid var(--border);}
-.data-table{width:100%;border-collapse:collapse;}
-.data-table th{background:var(--teal);color:white;font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;padding:12px 16px;text-align:left;}
-.data-table td{padding:12px 16px;font-size:13px;border-bottom:1px solid var(--border);}
-.data-table tr:nth-child(even) td{background:var(--cream);}
-.data-table td:last-child{color:var(--teal);font-weight:600;}
-.word-table{width:100%;border-collapse:collapse;}
-.word-table th{background:var(--gold);color:white;font-size:12px;font-weight:600;padding:10px 14px;text-align:left;}
-.word-table td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--border);}
-.word-table tr:nth-child(even) td{background:var(--cream);}
-.word-table td:first-child{color:var(--teal);font-weight:500;}
-.word-table td:nth-child(2){color:#c0392b;}
-.word-table td:nth-child(3){color:var(--ink-light);font-size:12px;}
+.steps-list { display: flex; flex-direction: column; gap: 0; }
+.step-item { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--border); }
+.step-item:last-child { border-bottom: none; }
+.step-num { width: 32px; height: 32px; min-width: 32px; background: var(--teal); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+.step-content { flex: 1; }
+.step-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.step-desc { font-size: 13px; color: var(--ink-mid); line-height: 1.5; }
 
-/* TWO COL */
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.col-card{background:var(--white);border-radius:var(--radius);padding:22px;border:1.5px solid var(--border);}
-.col-head{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.col-yes .col-head{color:var(--teal);}
-.col-no .col-head{color:#e74c3c;}
-.col-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
-.col-list li{font-size:13px;color:var(--ink-mid);display:flex;gap:8px;line-height:1.4;}
+.faq-item { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 10px; }
+.faq-q { background: var(--white); padding: 16px 20px; font-size: 14px; font-weight: 600; color: var(--teal-dark); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.faq-q:hover { background: var(--teal-pale); }
+.faq-icon { color: var(--teal); font-size: 18px; transition: transform 0.2s; }
+.faq-a { display: none; padding: 16px 20px; font-size: 13px; color: var(--ink-mid); line-height: 1.7; background: var(--cream); border-top: 1px solid var(--border); }
+.faq-a.open { display: block; }
+.faq-icon.open { transform: rotate(45deg); }
 
-/* ALERTS */
-.alert-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.alert-card{border-radius:var(--radius-sm);padding:18px;}
-.alert-blue{background:#e8f4fd;border-left:4px solid #3498db;}
-.alert-orange{background:#fef3e8;border-left:4px solid #e67e22;}
-.alert-red{background:#fdeaea;border-left:4px solid #e74c3c;}
-.alert-grey{background:#f5f5f5;border-left:4px solid #95a5a6;}
-.alert-title{font-size:13px;font-weight:700;margin-bottom:8px;}
-.alert-text{font-size:12px;color:var(--ink-mid);line-height:1.6;}
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { background: var(--teal); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 12px 16px; text-align: left; }
+.data-table th:first-child { border-radius: 8px 0 0 0; }
+.data-table th:last-child { border-radius: 0 8px 0 0; }
+.data-table td { padding: 12px 16px; font-size: 13px; border-bottom: 1px solid var(--border); }
+.data-table tr:nth-child(even) td { background: var(--cream); }
+.data-table td:last-child { color: var(--teal); font-weight: 600; }
+.table-wrap { border-radius: var(--radius-sm); overflow: hidden; border: 1.5px solid var(--border); }
 
-/* CALCULATOR */
-.calc-card{background:var(--teal-dark);border-radius:var(--radius);padding:28px;color:white;}
-.calc-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;margin-bottom:20px;}
-.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
-.calc-field label{font-size:12px;opacity:0.75;margin-bottom:6px;display:block;}
-.calc-input{width:100%;background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.2);border-radius:8px;padding:12px;color:white;font-size:16px;font-weight:600;outline:none;font-family:'DM Sans',sans-serif;}
-.calc-input:focus{border-color:var(--gold);}
-.calc-result{background:rgba(255,255,255,0.1);border-radius:var(--radius-sm);padding:20px;text-align:center;}
-.calc-result-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;color:var(--gold-light);}
-.calc-result-label{font-size:13px;opacity:0.75;margin-top:4px;}
+.alert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.alert-card { border-radius: var(--radius-sm); padding: 18px; }
+.alert-blue { background: #e8f4fd; border-left: 4px solid #3498db; }
+.alert-orange { background: #fef3e8; border-left: 4px solid #e67e22; }
+.alert-red { background: #fdeaea; border-left: 4px solid #e74c3c; }
+.alert-grey { background: #f5f5f5; border-left: 4px solid #95a5a6; }
+.alert-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+.alert-text { font-size: 12px; color: var(--ink-mid); line-height: 1.6; }
 
-/* OPPORTUNITIES */
-.opp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.opp-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;transition:all 0.2s;}
-.opp-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:var(--shadow);}
-.opp-emoji{font-size:32px;margin-bottom:10px;}
-.opp-title{font-size:14px;font-weight:700;color:var(--teal-dark);margin-bottom:6px;}
-.opp-desc{font-size:12px;color:var(--ink-light);line-height:1.5;}
+.calc-card { background: var(--teal-dark); border-radius: var(--radius); padding: 28px; color: white; }
+.calc-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; margin-bottom: 20px; }
+.calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+.calc-field label { font-size: 12px; opacity: 0.75; margin-bottom: 6px; display: block; }
+.calc-input { width: 100%; background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 12px; color: white; font-size: 16px; font-weight: 600; outline: none; font-family: 'DM Sans', sans-serif; }
+.calc-input:focus { border-color: var(--gold); }
+.calc-input::placeholder { opacity: 0.4; color: white; }
+.calc-result { background: rgba(255,255,255,0.1); border-radius: var(--radius-sm); padding: 20px; text-align: center; }
+.calc-result-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 700; color: var(--gold-light); }
+.calc-result-label { font-size: 13px; opacity: 0.75; margin-top: 4px; }
 
-/* JOURNAL */
-.journal-prompts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;}
-.prompt-btn{background:var(--teal-pale);border:1.5px solid var(--teal-light);border-radius:var(--radius-sm);padding:14px 16px;font-size:13px;color:var(--teal-dark);cursor:pointer;text-align:left;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
-.prompt-btn:hover{background:var(--teal);color:white;}
-.journal-entries{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
-.journal-entry{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px;}
-.entry-date{font-size:11px;color:var(--ink-light);margin-bottom:6px;}
-.entry-text{font-size:13px;color:var(--ink);line-height:1.6;}
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.col-card { background: var(--white); border-radius: var(--radius); padding: 22px; border: 1.5px solid var(--border); }
+.col-head { font-size: 13px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.col-yes .col-head { color: var(--teal); }
+.col-no .col-head { color: #e74c3c; }
+.col-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.col-list li { font-size: 13px; color: var(--ink-mid); display: flex; gap: 8px; line-height: 1.4; }
 
-/* NOTES WALL */
-.notes-wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
-.sticky-note{border-radius:3px;padding:18px;font-size:13px;line-height:1.6;box-shadow:var(--shadow-sm);transform:rotate(var(--rot));transition:transform 0.2s;}
-.sticky-note:hover{transform:rotate(0deg) translateY(-4px);}
-.sticky-teal{background:#d4f5ef;}
-.sticky-gold{background:#fdefc3;}
-.sticky-rose{background:#fde8e8;}
-.sticky-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;opacity:0.6;}
-.note-form{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:24px;}
-.note-type-btns{display:flex;gap:8px;margin-bottom:12px;}
-.note-type-btn{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;background:white;}
-.note-type-btn.active{background:var(--teal);color:white;border-color:var(--teal);}
-.note-submit{background:var(--teal);color:white;border:none;border-radius:8px;padding:12px 24px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.word-table { width: 100%; border-collapse: collapse; }
+.word-table th { background: var(--gold); color: white; font-size: 12px; font-weight: 600; padding: 10px 14px; text-align: left; }
+.word-table td { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--border); }
+.word-table tr:nth-child(even) td { background: var(--cream); }
+.word-table td:first-child { color: var(--teal); font-weight: 500; }
+.word-table td:nth-child(2) { color: #c0392b; }
+.word-table td:nth-child(3) { color: var(--ink-light); font-size: 12px; }
 
-/* SHARE */
-.share-section{background:linear-gradient(135deg,var(--gold) 0%,#e8b86d 100%);border-radius:var(--radius);padding:32px;text-align:center;color:white;margin-top:32px;}
-.share-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;margin-bottom:8px;}
-.share-desc{font-size:14px;opacity:0.9;margin-bottom:20px;}
-.share-link-box{display:flex;gap:10px;max-width:440px;margin:0 auto;}
-.share-link-input{flex:1;border-radius:8px;border:none;padding:12px 14px;font-size:13px;color:var(--ink);font-family:'DM Sans',sans-serif;}
-.share-copy-btn{background:var(--teal-dark);color:white;border:none;border-radius:8px;padding:12px 20px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;}
+.opp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.opp-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px; text-align: center; transition: all 0.2s; }
+.opp-card:hover { border-color: var(--teal); transform: translateY(-3px); box-shadow: var(--shadow); }
+.opp-emoji { font-size: 32px; margin-bottom: 10px; }
+.opp-title { font-size: 14px; font-weight: 700; color: var(--teal-dark); margin-bottom: 6px; }
+.opp-desc { font-size: 12px; color: var(--ink-light); line-height: 1.5; }
 
-@media(max-width:640px){
-  .comparison-grid,.two-col,.alert-grid,.opp-grid,.journal-prompts{grid-template-columns:1fr;}
-  .form-grid-2{grid-template-columns:1fr;}
-  .calc-grid{grid-template-columns:1fr;}
-  .app-main{padding:20px 16px 80px;}
-  .module-header{padding:24px;}
-  .dashboard-hero{padding:28px;}
-  .hero-title{font-size:28px;}
-  .gate-card{padding:32px 24px;}
-  .gate-title{font-size:28px;}
+.journal-prompts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.prompt-btn { background: var(--teal-pale); border: 1.5px solid var(--teal-light); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 13px; color: var(--teal-dark); cursor: pointer; text-align: left; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.prompt-btn:hover { background: var(--teal); color: white; }
+.journal-entries { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+.journal-entry { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 16px; }
+.entry-date { font-size: 11px; color: var(--ink-light); margin-bottom: 6px; }
+.entry-text { font-size: 13px; color: var(--ink); line-height: 1.6; }
+
+.notes-wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 14px; }
+.sticky-note { border-radius: 3px; padding: 18px; font-size: 13px; line-height: 1.6; box-shadow: var(--shadow-sm); transform: rotate(var(--rot)); transition: transform 0.2s; }
+.sticky-note:hover { transform: rotate(0deg) translateY(-4px); }
+.sticky-teal { background: #d4f5ef; }
+.sticky-gold { background: #fdefc3; }
+.sticky-rose { background: #fde8e8; }
+.sticky-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; opacity: 0.6; }
+.note-form { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 24px; }
+.note-form-title { font-size: 14px; font-weight: 600; margin-bottom: 14px; color: var(--teal-dark); }
+.note-type-btns { display: flex; gap: 8px; margin-bottom: 12px; }
+.note-type-btn { padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border); font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; background: white; }
+.note-type-btn.active { background: var(--teal); color: white; border-color: var(--teal); }
+.note-submit { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 12px 24px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.note-submit:hover { background: var(--teal-dark); }
+
+@media (max-width: 640px) {
+  .comparison-grid, .two-col, .alert-grid, .opp-grid, .journal-prompts { grid-template-columns: 1fr; }
+  .form-grid-2, .calc-grid { grid-template-columns: 1fr; }
+  .app-main { padding: 20px 16px 80px; }
+  .module-header { padding: 24px; }
+  .dashboard-hero { padding: 28px; }
+  .hero-title { font-size: 28px; }
+  .gate-card { padding: 32px 24px; }
+  .gate-title { font-size: 28px; }
+  .logo-sub { display: none; }
+  .google-banner { flex-direction: column; text-align: center; }
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.fade-up{animation:fadeUp 0.5s ease forwards;}
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.fade-up { animation: fadeUp 0.5s ease forwards; }
 </style>
 </head>
 <body>
 
-<!-- SAVE INDICATOR -->
-<div class="save-indicator" id="save-indicator">☁️ Sauvegardé</div>
-
-<!-- GATE -->
+<!-- ─── GATE ─── -->
 <div id="gate">
   <div class="gate-card">
     <div class="gate-badge">🌿 École En Vie de Sens — Certifiée Qualiopi</div>
     <h1 class="gate-title">Le Carnet de Route<br>du Praticien</h1>
     <p class="gate-subtitle">Bien-Être & Massage</p>
-    <p class="gate-desc">Votre compagnon de route pour lancer, structurer et développer votre activité. Créez votre espace personnel et retrouvez votre progression à chaque connexion.</p>
-    <div class="gate-perks">
-      <div class="gate-perk"><div class="gate-perk-icon">✓</div> 7 modules complets & interactifs</div>
-      <div class="gate-perk"><div class="gate-perk-icon">✓</div> Votre progression sauvegardée dans le cloud ☁️</div>
-      <div class="gate-perk"><div class="gate-perk-icon">✓</div> Reconnectez-vous depuis n'importe quel appareil</div>
-      <div class="gate-perk"><div class="gate-perk-icon">✓</div> 100% gratuit, accès immédiat</div>
-    </div>
     <div class="gate-tabs">
-      <button class="gate-tab active" onclick="switchTab('inscription')">Créer mon espace</button>
-      <button class="gate-tab" onclick="switchTab('connexion')">Me reconnecter</button>
+      <button class="gate-tab-btn active" onclick="switchTab('inscription')">✨ Première visite</button>
+      <button class="gate-tab-btn" onclick="switchTab('connexion')">🔑 Me reconnecter</button>
     </div>
-    <div id="form-inscription" class="gate-form">
-      <input type="text" class="gate-input" id="reg-prenom" placeholder="Votre prénom">
-      <input type="email" class="gate-input" id="reg-email" placeholder="Votre adresse email">
-      <input type="password" class="gate-input" id="reg-password" placeholder="Choisissez un mot de passe (min. 6 caractères)">
-      <div class="gate-error" id="reg-error"></div>
-      <button class="gate-btn" onclick="inscrire()">🚀 Créer mon espace gratuit</button>
+    <div id="tab-inscription">
+      <div class="gate-perks">
+        <div class="gate-perk"><div class="gate-perk-icon">✓</div> 7 modules complets & interactifs</div>
+        <div class="gate-perk"><div class="gate-perk-icon">✓</div> Check-lists, formulaires & calculateur de tarif</div>
+        <div class="gate-perk"><div class="gate-perk-icon">✓</div> Votre progression sauvegardée & accessible partout</div>
+        <div class="gate-perk"><div class="gate-perk-icon">✓</div> 100% gratuit, accès immédiat</div>
+      </div>
+      <div class="gate-form">
+        <input type="text" class="gate-input" id="ins-prenom" placeholder="Votre prénom">
+        <input type="email" class="gate-input" id="ins-email" placeholder="Votre adresse email">
+        <input type="password" class="gate-input" id="ins-password" placeholder="Choisissez un mot de passe (min. 6 caractères)">
+        <div class="gate-error" id="ins-error"></div>
+        <button class="gate-btn" id="ins-btn" onclick="inscrire()">🚀 Accéder à mon Carnet de Route gratuit</button>
+      </div>
+      <p class="gate-legal">En vous inscrivant, vous acceptez de recevoir des informations de l'École En Vie de Sens. Pas de spam, promis. 🌿</p>
     </div>
-    <div id="form-connexion" class="gate-form" style="display:none">
-      <input type="email" class="gate-input" id="login-email" placeholder="Votre adresse email">
-      <input type="password" class="gate-input" id="login-password" placeholder="Votre mot de passe">
-      <div class="gate-error" id="login-error"></div>
-      <button class="gate-btn" onclick="connecter()">🔐 Accéder à mon espace</button>
+    <div id="tab-connexion" style="display:none">
+      <p style="font-size:14px;color:var(--ink-mid);margin-bottom:20px;line-height:1.6">Bon retour ! Connectez-vous pour retrouver votre progression exactement là où vous l'avez laissée.</p>
+      <div class="gate-form">
+        <input type="email" class="gate-input" id="con-email" placeholder="Votre adresse email">
+        <input type="password" class="gate-input" id="con-password" placeholder="Votre mot de passe">
+        <div class="gate-error" id="con-error"></div>
+        <button class="gate-btn" id="con-btn" onclick="connecter()">🔑 Me connecter</button>
+      </div>
     </div>
-    <p class="gate-legal">En vous inscrivant, vous acceptez de recevoir des informations de l'École En Vie de Sens. Vos données sont sécurisées. 🌿</p>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ─── APP ─── -->
 <div id="app">
   <header class="app-header">
     <div class="header-inner">
@@ -344,13 +337,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
   <nav class="app-nav">
     <div class="nav-inner">
       <button class="nav-tab active" onclick="showDashboard()">🏠 Accueil</button>
-      <button class="nav-tab" onclick="showModule(1)">🛋️ M1</button>
-      <button class="nav-tab" onclick="showModule(2)">📋 M2</button>
-      <button class="nav-tab" onclick="showModule(3)">⚖️ M3</button>
-      <button class="nav-tab" onclick="showModule(4)">🤝 M4</button>
-      <button class="nav-tab" onclick="showModule(5)">💶 M5</button>
-      <button class="nav-tab" onclick="showModule(6)">📣 M6</button>
-      <button class="nav-tab" onclick="showModule(7)">🌱 M7</button>
+      <button class="nav-tab" onclick="showModule(1)">🛋️ M1 — Espace</button>
+      <button class="nav-tab" onclick="showModule(2)">📋 M2 — Statuts</button>
+      <button class="nav-tab" onclick="showModule(3)">⚖️ M3 — Légal</button>
+      <button class="nav-tab" onclick="showModule(4)">🤝 M4 — Clients</button>
+      <button class="nav-tab" onclick="showModule(5)">💶 M5 — Tarifs</button>
+      <button class="nav-tab" onclick="showModule(6)">📣 M6 — Comm</button>
+      <button class="nav-tab" onclick="showModule(7)">🌱 M7 — Grandir</button>
       <button class="nav-tab" onclick="showModule(8)">✍️ Journal</button>
     </div>
   </nav>
@@ -360,19 +353,30 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
     <!-- DASHBOARD -->
     <div id="view-dashboard">
       <div class="dashboard-hero fade-up">
-        <div class="hero-greeting">Bienvenue dans votre espace personnel</div>
+        <div class="hero-greeting">Bienvenue dans votre espace</div>
         <div class="hero-title" id="hero-title">Bonjour !</div>
         <div class="hero-sub">Votre carnet de route vers l'excellence</div>
         <div class="hero-progress-label">Progression globale</div>
         <div class="hero-progress-bar"><div class="hero-progress-fill" id="hero-bar" style="width:0%"></div></div>
         <div class="hero-progress-pct" id="hero-pct">0% complété</div>
-        <div class="cloud-badge">☁️ Progression sauvegardée dans le cloud</div>
       </div>
 
       <div class="quote-card fade-up">
         <div class="quote-mark">"</div>
         <div class="quote-text" id="daily-quote">Ce carnet n'est pas un manuel. C'est une aide à la pensée. Revenez-y, annotez-le, complétez-le au fil de votre pratique.</div>
         <div class="quote-author">— Anne-Sophie Dufeutrelle, fondatrice En Vie de Sens</div>
+      </div>
+
+      <!-- AVIS GOOGLE -->
+      <div class="google-banner fade-up">
+        <div class="google-banner-left">
+          <div style="font-size:28px">⭐</div>
+          <div>
+            <div class="google-text-title">Vous aimez votre formation En Vie de Sens ?</div>
+            <div class="google-text-sub">Laissez un avis Google — ça aide d'autres praticiens à nous trouver 🌿</div>
+          </div>
+        </div>
+        <a class="google-btn" href="https://www.google.com/search?sca_esv=6a03f9eebeaaf4c7&q=ecole+en+vie+de+sens&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOS8WtZscVFCPMONE2-5_RYrJ1BiJf0kvTqOncakABFW9xZDYsfrNRerjRybf--Eoe7gMJ0A%3D&uds=ALYpb_lLt3rF4OntvAcKw6YR8l5V9145uRfzhjjHZf5oS_ZIb5O1Nz_I9lWccYLcgQkCAE_isNW90OjcTZuNULS7jFka8W6Rgih86NkhLmEM1rpqFS-GYv8&sa=X&ved=2ahUKEwjexpuq__KUAxXVKvsDHcURHi0Q3PALegQILxAF" target="_blank" rel="noopener">⭐ Laisser un avis</a>
       </div>
 
       <div class="section-label">Vos modules</div>
@@ -386,245 +390,278 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
         <div class="module-card" onclick="showModule(7)"><div class="module-emoji">🌱</div><div class="module-num">Module 7</div><div class="module-card-title">Grandir & Se Développer</div><div class="module-card-sub">Votre cursus ouvre des portes</div><div class="module-card-progress"><div class="module-card-fill" id="m7-bar" style="width:0%"></div></div><div class="module-card-pct" id="m7-pct">0%</div></div>
         <div class="module-card" onclick="showModule(8)"><div class="module-emoji">✍️</div><div class="module-num">Bonus</div><div class="module-card-title">Journal de Réflexion</div><div class="module-card-sub">Vos notes & le mur collaboratif</div><div class="module-card-progress"><div class="module-card-fill" style="width:100%;background:var(--gold)"></div></div><div class="module-card-pct">Toujours disponible ✨</div></div>
       </div>
-      <div class="share-section">
-        <div class="share-title">Partager le Carnet de Route</div>
-        <div class="share-desc">Offrez cet outil à vos futurs apprenants — partagez le lien sur votre landing page.</div>
-        <div class="share-link-box">
-          <input type="text" class="share-link-input" value="https://votre-lien-tiiny.host" readonly id="share-link">
-          <button class="share-copy-btn" onclick="copyLink()">📋 Copier</button>
-        </div>
-      </div>
     </div>
 
     <!-- MODULE 1 -->
     <div id="view-module-1" class="module-view">
-      <button class="back-btn" onclick="showDashboard()">← Retour</button>
+      <button class="back-btn" onclick="showDashboard()">← Retour à l'accueil</button>
       <div class="module-header" data-emoji="🛋️"><div class="mod-label">Module 1</div><div class="mod-title">Installer son Espace</div><div class="mod-subtitle">Le cadre fait partie du soin</div></div>
       <div class="info-box">Un espace de soin professionnel n'est pas qu'une table et une huile. C'est une expérience sensorielle complète que votre client va vivre dès qu'il franchit votre porte.</div>
-      <div class="section-block"><div class="section-label">La Table de Massage</div>
+
+      <div class="section-block">
+        <div class="section-label">La Table de Massage</div>
         <div class="checklist">
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-t1"><div class="check-box"></div><span class="check-label">Table pliante professionnelle — largeur 70-75 cm, capacité 180-200 kg</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-t2"><div class="check-box"></div><span class="check-label">Housse de transport pour la table</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-t3"><div class="check-box"></div><span class="check-label">Appuie-tête réglable et confortable</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-t4"><div class="check-box"></div><span class="check-label">Draps de table x3 minimum — coton ou microfibre</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-t5"><div class="check-box"></div><span class="check-label">Alèse de protection lavable</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-t6"><div class="check-box"></div><span class="check-label">Traversin ou coussin de positionnement</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-t7"><div class="check-box"></div><span class="check-label">Couverture légère pour les clients qui ont froid</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-t1"><div class="check-box"></div><span class="check-label">Table pliante professionnelle — largeur 70-75 cm, capacité 180-200 kg recommandée</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-t2"><div class="check-box"></div><span class="check-label">Housse de transport pour la table (si déplacements à domicile)</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-t3"><div class="check-box"></div><span class="check-label">Appuie-tête réglable et confortable</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-t4"><div class="check-box"></div><span class="check-label">Draps de table x3 minimum — coton ou microfibre</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-t5"><div class="check-box"></div><span class="check-label">Alèse de protection lavable</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-t6"><div class="check-box"></div><span class="check-label">Traversin ou coussin de positionnement (sous les genoux, les chevilles)</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-t7"><div class="check-box"></div><span class="check-label">Couverture légère pour les clients qui ont froid</span></div>
         </div>
       </div>
+
       <div class="two-col" style="margin-bottom:24px">
-        <div><div class="section-label">Les Produits</div>
+        <div>
+          <div class="section-label">Les Produits</div>
           <div class="checklist">
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-p1"><div class="check-box"></div><span class="check-label">Huile de massage neutre qualité pro (GREEN SPA recommandée)</span></div>
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-p2"><div class="check-box"></div><span class="check-label">Huile spécialisée selon vos techniques</span></div>
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-p3"><div class="check-box"></div><span class="check-label">Gel hydroalcoolique et savon doux</span></div>
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-p4"><div class="check-box"></div><span class="check-label">Huiles essentielles si aromathérapie intégrée</span></div>
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-p5"><div class="check-box"></div><span class="check-label">Mouchoirs et lingettes sans parfum</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-p1"><div class="check-box"></div><span class="check-label">Huile de massage neutre qualité pro (GREEN SPA recommandée)</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-p2"><div class="check-box"></div><span class="check-label">Huile spécialisée selon vos techniques</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-p3"><div class="check-box"></div><span class="check-label">Gel hydroalcoolique et savon doux</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-p4"><div class="check-box"></div><span class="check-label">Huiles essentielles si aromathérapie intégrée</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-p5"><div class="check-box"></div><span class="check-label">Mouchoirs et lingettes sans parfum</span></div>
           </div>
         </div>
-        <div><div class="section-label">L'Environnement</div>
+        <div>
+          <div class="section-label">L'Environnement</div>
           <div class="checklist">
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-e1"><div class="check-box"></div><span class="check-label">Playlist dédiée, volume bas et constant</span></div>
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-e2"><div class="check-box"></div><span class="check-label">Diffuseur d'huiles essentielles</span></div>
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-e3"><div class="check-box"></div><span class="check-label">Éclairage tamisable — aucun néon direct</span></div>
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-e4"><div class="check-box"></div><span class="check-label">Température 22-24°C minimum</span></div>
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-e5"><div class="check-box"></div><span class="check-label">Serviettes chaudes si technique le nécessite</span></div>
-            <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-e6"><div class="check-box"></div><span class="check-label">Espace épuré, sans désordre visible</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-e1"><div class="check-box"></div><span class="check-label">Playlist dédiée, volume bas et constant</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-e2"><div class="check-box"></div><span class="check-label">Diffuseur d'huiles essentielles</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-e3"><div class="check-box"></div><span class="check-label">Éclairage tamisable — aucun néon direct</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-e4"><div class="check-box"></div><span class="check-label">Température 22-24°C minimum</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-e5"><div class="check-box"></div><span class="check-label">Serviettes chaudes si technique le nécessite</span></div>
+            <div class="check-item" onclick="toggleCheck(this)" data-key="m1-e6"><div class="check-box"></div><span class="check-label">Espace épuré, sans désordre visible</span></div>
           </div>
         </div>
       </div>
-      <div class="section-block"><div class="section-label">Rituel Avant Chaque Séance</div>
+
+      <div class="section-block">
+        <div class="section-label">Rituel Avant Chaque Séance</div>
         <div class="checklist">
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-r1"><div class="check-box"></div><span class="check-label">Table stable, hauteur ajustée, draps propres</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-r2"><div class="check-box"></div><span class="check-label">Musique lancée, téléphone en silencieux</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-r3"><div class="check-box"></div><span class="check-label">Pièce aérée et température agréable</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-r4"><div class="check-box"></div><span class="check-label">Produits à portée, rien à chercher en cours de soin</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-r5"><div class="check-box"></div><span class="check-label">Mains propres, ongles courts, bijoux retirés</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m1')" data-key="m1-r6"><div class="check-box"></div><span class="check-label">Fiche client relue, notes de la séance précédente consultées</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-r1"><div class="check-box"></div><span class="check-label">Table stable, hauteur ajustée, draps propres</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-r2"><div class="check-box"></div><span class="check-label">Musique lancée, téléphone en silencieux</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-r3"><div class="check-box"></div><span class="check-label">Pièce aérée et température agréable</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-r4"><div class="check-box"></div><span class="check-label">Produits à portée, rien à chercher en cours de soin</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-r5"><div class="check-box"></div><span class="check-label">Mains propres, ongles courts, bijoux retirés</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m1-r6"><div class="check-box"></div><span class="check-label">Fiche client relue, notes de la séance précédente consultées</span></div>
         </div>
       </div>
-      <div class="tip-box"><div class="tip-box-label">💡 Conseil En Vie de Sens</div>L'odeur, la température et la musique sont les trois premiers éléments que votre client perçoit avant même que vous le touchiez.</div>
+
+      <!-- FOURNISSEURS + TRACABILITE -->
+      <div class="section-block">
+        <div class="section-label">Mes Fournisseurs & Traçabilité Produits</div>
+        <div class="form-card" style="margin-bottom:16px">
+          <div class="form-card-title">Fournisseurs</div>
+          <div class="form-grid">
+            <div class="field-group"><label class="field-label">Huiles de massage (fournisseur, site, contact)</label><input class="field-input" placeholder="ex: GREEN SPA — greenspa.fr"></div>
+            <div class="field-group"><label class="field-label">Table et matériel (fournisseur, site)</label><input class="field-input" placeholder="ex: Earthlite — amazon.fr"></div>
+            <div class="field-group"><label class="field-label">Draps, housses, textiles</label><input class="field-input" placeholder="..."></div>
+            <div class="field-group"><label class="field-label">Huiles essentielles et diffusion</label><input class="field-input" placeholder="..."></div>
+          </div>
+        </div>
+
+        <div class="form-card" style="border-color:var(--teal);margin-bottom:16px">
+          <div class="form-card-title" style="color:var(--teal)">🔍 Traçabilité Produit</div>
+          <p style="font-size:13px;color:var(--ink-mid);margin-bottom:16px;line-height:1.6">Renseignez pour chaque produit utilisé en séance : cela vous protège en cas de réaction et démontre votre sérieux professionnel.</p>
+          <div class="form-grid form-grid-2">
+            <div class="field-group"><label class="field-label">Nom du produit</label><input class="field-input" placeholder="ex: Huile végétale de jojoba"></div>
+            <div class="field-group"><label class="field-label">Fournisseur / Marque</label><input class="field-input" placeholder="ex: GREEN SPA"></div>
+            <div class="field-group"><label class="field-label">Ingrédients principaux (INCI)</label><input class="field-input" placeholder="ex: Simmondsia Chinensis Seed Oil"></div>
+            <div class="field-group"><label class="field-label">Certifications</label><input class="field-input" placeholder="ex: Bio, Vegan, Cruelty-free, Cosmos..."></div>
+            <div class="field-group"><label class="field-label">Numéro de lot</label><input class="field-input" placeholder="ex: LOT2024-0312"></div>
+            <div class="field-group"><label class="field-label">Date d'expiration (DDM)</label><input class="field-input" type="date"></div>
+          </div>
+          <div class="field-group"><label class="field-label">Conditions de stockage / remarques</label><textarea class="field-textarea" placeholder="ex: À conserver à l'abri de la lumière, température < 25°C..."></textarea></div>
+        </div>
+
+        <!-- PHARMACOVIGILANCE -->
+        <div class="pharma-box">
+          <div class="pharma-box-title">🚨 Pharmacovigilance — Réactions Indésirables</div>
+          <div class="pharma-box-desc">En tant que praticien(ne) utilisant des huiles essentielles et des produits cosmétiques, vous êtes concerné(e) par la déclaration des effets indésirables. Toute réaction anormale chez un client doit être signalée à l'ANSM (Agence Nationale de Sécurité du Médicament).</div>
+          <div class="pharma-steps">
+            <div class="pharma-step"><div class="pharma-step-num">1</div><span>Notez immédiatement la réaction observée, la zone, la durée et les produits utilisés</span></div>
+            <div class="pharma-step"><div class="pharma-step-num">2</div><span>Conservez le produit incriminé (numéro de lot, date d'expiration)</span></div>
+            <div class="pharma-step"><div class="pharma-step-num">3</div><span>Invitez votre client à consulter un médecin si la réaction persiste</span></div>
+            <div class="pharma-step"><div class="pharma-step-num">4</div><span>Déclarez l'effet indésirable sur le portail de l'ANSM</span></div>
+          </div>
+          <a class="pharma-link" href="https://signalement.social-sante.gouv.fr" target="_blank" rel="noopener">🔗 Déclarer sur le portail ANSM</a>
+        </div>
+
+        <div class="form-card" style="margin-top:16px;border-color:#e74c3c">
+          <div class="form-card-title" style="color:#c0392b">📋 Journal des Incidents Produits</div>
+          <p style="font-size:13px;color:var(--ink-mid);margin-bottom:16px">À remplir en cas de réaction observée chez un client.</p>
+          <div class="form-grid form-grid-2">
+            <div class="field-group"><label class="field-label">Date de l'incident</label><input class="field-input" type="date"></div>
+            <div class="field-group"><label class="field-label">Produit(s) utilisé(s)</label><input class="field-input" placeholder="..."></div>
+            <div class="field-group"><label class="field-label">Réaction observée</label><input class="field-input" placeholder="ex: rougeur, démangeaison..."></div>
+            <div class="field-group"><label class="field-label">Zone du corps concernée</label><input class="field-input" placeholder="..."></div>
+          </div>
+          <div class="field-group"><label class="field-label">Actions prises & suites données</label><textarea class="field-textarea" placeholder="ex: Application arrêtée, client conseillé de consulter..."></textarea></div>
+        </div>
+      </div>
+
+      <div class="tip-box"><div class="tip-box-label">💡 Conseil En Vie de Sens</div>L'odeur, la température et la musique sont les trois premiers éléments que votre client perçoit avant même que vous le touchiez. Soignez-les autant que vos gestes.</div>
     </div>
 
     <!-- MODULE 2 -->
     <div id="view-module-2" class="module-view">
-      <button class="back-btn" onclick="showDashboard()">← Retour</button>
+      <button class="back-btn" onclick="showDashboard()">← Retour à l'accueil</button>
       <div class="module-header" data-emoji="📋"><div class="mod-label">Module 2</div><div class="mod-title">Statuts & Administratif</div><div class="mod-subtitle">Mettez la bonne structure sous votre élan</div></div>
-      <div class="info-box">Plusieurs statuts permettent d'exercer le massage bien-être en indépendant. Il n'y a pas de réponse universelle.</div>
-      <div class="section-block"><div class="section-label">Comparatif des Statuts</div>
+      <div class="info-box">Plusieurs statuts permettent d'exercer le massage bien-être en indépendant. Il n'y a pas de réponse universelle — votre choix dépend de votre situation personnelle et de votre niveau de risque accepté.</div>
+      <div class="section-block">
+        <div class="section-label">Comparatif des Statuts</div>
         <div class="comparison-grid">
           <div class="compare-card featured"><div class="compare-badge badge-teal">Recommandé pour démarrer</div><div class="compare-title">Micro-entrepreneur</div><ul class="compare-list"><li>Création en ligne en 30 min</li><li>Code APE : 9604Z</li><li>Charges uniquement sur CA réalisé</li><li>Plafond 2026 : 83 600 €/an</li><li>Pas de TVA sous 37 500 €</li><li>Comptabilité simplifiée</li></ul></div>
-          <div class="compare-card"><div class="compare-badge badge-gold">Idéal en transition</div><div class="compare-title">Portage Salarial</div><ul class="compare-list"><li>Vous restez salarié(e)</li><li>Couverture chômage, retraite, mutuelle</li><li>Zéro administratif de votre côté</li><li>Frais de gestion : 5 à 15% du CA</li><li>Pas de plafond de CA</li></ul></div>
-          <div class="compare-card"><div class="compare-badge badge-grey">Pour activité développée</div><div class="compare-title">EURL / SASU</div><ul class="compare-list"><li>Plus de formalités et de coûts</li><li>Aucun plafond de CA</li><li>Protection du patrimoine personnel</li><li>Comptabilité obligatoire</li><li>Conseillé après 2-3 ans</li></ul></div>
+          <div class="compare-card"><div class="compare-badge badge-gold">Idéal en transition</div><div class="compare-title">Portage Salarial</div><ul class="compare-list"><li>Vous restez salarié(e)</li><li>Couverture chômage, retraite, mutuelle</li><li>Zéro administratif de votre côté</li><li>Frais de gestion : 5 à 15% du CA</li><li>Pas de plafond de CA</li><li>Idéal pour tester avant de se lancer</li></ul></div>
+          <div class="compare-card"><div class="compare-badge badge-grey">Pour activité développée</div><div class="compare-title">EURL / SASU</div><ul class="compare-list"><li>Plus de formalités et de coûts</li><li>Aucun plafond de CA</li><li>Protection du patrimoine personnel</li><li>Comptabilité obligatoire</li><li>Conseillé après 2-3 ans d'activité</li></ul></div>
         </div>
       </div>
-      <div class="section-block"><div class="section-label">Check-list Administrative</div>
+      <div class="section-block">
+        <div class="section-label">Check-list Administrative — Démarrage</div>
         <div class="checklist">
-          <div class="check-item" onclick="toggleCheck(this,'m2')" data-key="m2-1"><div class="check-box"></div><span class="check-label">Statut choisi et créé</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m2')" data-key="m2-2"><div class="check-box"></div><span class="check-label">SIRET et numéro SIREN reçus</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m2')" data-key="m2-3"><div class="check-box"></div><span class="check-label">Assurance RC Professionnelle souscrite</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m2')" data-key="m2-4"><div class="check-box"></div><span class="check-label">Compte bancaire dédié ouvert</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m2')" data-key="m2-5"><div class="check-box"></div><span class="check-label">Registre des recettes mis en place</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m2')" data-key="m2-6"><div class="check-box"></div><span class="check-label">Médiateur de la consommation identifié dans mes CGV</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m2')" data-key="m2-7"><div class="check-box"></div><span class="check-label">Première déclaration de CA effectuée</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m2-1"><div class="check-box"></div><span class="check-label">Statut choisi et créé</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m2-2"><div class="check-box"></div><span class="check-label">SIRET et numéro SIREN reçus</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m2-3"><div class="check-box"></div><span class="check-label">Assurance RC Professionnelle souscrite</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m2-4"><div class="check-box"></div><span class="check-label">Compte bancaire dédié ouvert</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m2-5"><div class="check-box"></div><span class="check-label">Registre des recettes mis en place</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m2-6"><div class="check-box"></div><span class="check-label">Médiateur de la consommation identifié et mentionné dans mes CGV</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m2-7"><div class="check-box"></div><span class="check-label">Première déclaration de CA effectuée à l'échéance choisie</span></div>
         </div>
       </div>
-      <div class="tip-box"><div class="tip-box-label">💡 Conseil</div>Le portage salarial est souvent sous-estimé. Si vous êtes encore salarié(e) et souhaitez tester votre activité en parallèle, c'est une excellente porte d'entrée.</div>
+      <div class="tip-box"><div class="tip-box-label">💡 Conseil En Vie de Sens</div>Le portage salarial est souvent sous-estimé. Si vous êtes encore salarié(e) et souhaitez tester votre activité en parallèle, c'est une excellente porte d'entrée.</div>
     </div>
 
     <!-- MODULE 3 -->
     <div id="view-module-3" class="module-view">
-      <button class="back-btn" onclick="showDashboard()">← Retour</button>
+      <button class="back-btn" onclick="showDashboard()">← Retour à l'accueil</button>
       <div class="module-header" data-emoji="⚖️"><div class="mod-label">Module 3</div><div class="mod-title">Cadre Légal & Déontologie</div><div class="mod-subtitle">Savoir ce que vous pouvez faire — et comment le faire bien</div></div>
       <div class="info-box">Le massage bien-être est une activité non réglementée en France — ce qui est une liberté, et une responsabilité.</div>
-      <div class="section-block"><div class="section-label">Bien-Être vs Médical</div>
+      <div class="section-block">
+        <div class="section-label">La Frontière Essentielle — Bien-Être vs Médical</div>
         <div class="two-col">
-          <div class="col-card col-yes"><div class="col-head">✅ Ce que vous pouvez faire</div><ul class="col-list"><li><span>✓</span>Massages à visée de détente et relaxation</li><li><span>✓</span>Tensions musculaires du quotidien</li><li><span>✓</span>Accompagner le bien-être général</li><li><span>✓</span>Femmes enceintes, bébés, seniors</li><li><span>✓</span>Personnes fragilisées avec adaptations</li></ul></div>
-          <div class="col-card col-no"><div class="col-head">❌ Réservé à d'autres professionnels</div><ul class="col-list"><li><span>✗</span>Drainage lymphatique médical (kiné)</li><li><span>✗</span>Affirmations thérapeutiques ou de guérison</li><li><span>✗</span>Diagnostic de symptômes</li><li><span>✗</span>Substitution à un traitement médical</li><li><span>✗</span>Soins esthétiques réglementés (CAP)</li></ul></div>
+          <div class="col-card col-yes"><div class="col-head">✅ Ce que vous pouvez faire</div><ul class="col-list"><li><span>✓</span> Proposer des massages à visée de détente et de relaxation</li><li><span>✓</span> Travailler sur les tensions musculaires du quotidien</li><li><span>✓</span> Accompagner le bien-être général et la qualité de vie</li><li><span>✓</span> Proposer des techniques aux femmes enceintes, bébés, seniors</li></ul></div>
+          <div class="col-card col-no"><div class="col-head">❌ Ce qui relève d'autres professionnels</div><ul class="col-list"><li><span>✗</span> Le drainage lymphatique médical (kiné uniquement)</li><li><span>✗</span> Toute affirmation thérapeutique ou de guérison</li><li><span>✗</span> Le diagnostic de symptômes ou pathologies</li><li><span>✗</span> La substitution à un traitement médical</li></ul></div>
         </div>
       </div>
-      <div class="section-block"><div class="section-label">Mots Autorisés vs À Éviter</div>
-        <div class="table-wrap"><table class="word-table"><tr><th>✅ À utiliser</th><th>❌ À éviter</th><th>Pourquoi</th></tr><tr><td>Détente, relaxation, bien-être</td><td>Traitement, thérapie</td><td>Réservé aux pros de santé</td></tr><tr><td>Soin, massage bien-être</td><td>Soin médical, paramédical</td><td>Confusion avec acte réglementé</td></tr><tr><td>Accompagnement, qualité de vie</td><td>Guérison, soulagement de pathologie</td><td>Allégation de santé interdite</td></tr><tr><td>Drainage bien-être</td><td>Drainage lymphatique</td><td>Acte kiné exclusif</td></tr><tr><td>Massage du visage, kobido</td><td>Soin du visage (sans CAP)</td><td>Réservé aux esthéticiennes</td></tr></table></div>
-      </div>
-      <div class="section-block"><div class="section-label">Contre-Indications Absolues</div>
+      <div class="section-block">
+        <div class="section-label">Contre-Indications Absolues</div>
         <div class="checklist">
-          <div class="check-item" onclick="toggleCheck(this,'m3')" data-key="m3-ci1"><div class="check-box"></div><span class="check-label">Fièvre ou état infectieux aigu</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m3')" data-key="m3-ci2"><div class="check-box"></div><span class="check-label">Phlébite ou thrombose suspectée</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m3')" data-key="m3-ci3"><div class="check-box"></div><span class="check-label">Premier trimestre de grossesse (sauf formation spécifique)</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m3')" data-key="m3-ci4"><div class="check-box"></div><span class="check-label">Fracture récente sur la zone</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m3')" data-key="m3-ci5"><div class="check-box"></div><span class="check-label">Plaie ouverte, brûlure, infection cutanée</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m3')" data-key="m3-ci6"><div class="check-box"></div><span class="check-label">Cancer en cours de traitement (sauf avis médical)</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m3')" data-key="m3-ci7"><div class="check-box"></div><span class="check-label">Allergie connue aux huiles utilisées</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m3')" data-key="m3-ci8"><div class="check-box"></div><span class="check-label">Refus ou inconfort exprimé par le client</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m3-ci1"><div class="check-box"></div><span class="check-label">Fièvre ou état infectieux aigu</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m3-ci2"><div class="check-box"></div><span class="check-label">Phlébite ou thrombose suspectée</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m3-ci3"><div class="check-box"></div><span class="check-label">Premier trimestre de grossesse (sauf formation spécifique)</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m3-ci4"><div class="check-box"></div><span class="check-label">Fracture récente sur la zone</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m3-ci5"><div class="check-box"></div><span class="check-label">Plaie ouverte, brûlure, infection cutanée sur la zone à masser</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m3-ci6"><div class="check-box"></div><span class="check-label">Cancer en cours de traitement (sauf avis médical)</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m3-ci7"><div class="check-box"></div><span class="check-label">Allergie connue aux huiles utilisées</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m3-ci8"><div class="check-box"></div><span class="check-label">Refus ou inconfort exprimé par le client</span></div>
         </div>
       </div>
-      <div class="section-block"><div class="section-label">FAQ Clients</div>
+      <div class="section-block">
+        <div class="section-label">Questions Fréquentes des Clients</div>
         <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"Vous êtes kiné ?" <span class="faq-icon">+</span></div><div class="faq-a">Non, je suis praticien(ne) en massage bien-être, formé(e) et certifié(e) par l'École En Vie de Sens. Mon approche est axée sur la détente, la relaxation et la qualité de vie.</div></div>
         <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"Ça peut soigner mon dos ?" <span class="faq-icon">+</span></div><div class="faq-a">Mon travail ne se substitue pas à un suivi médical. En revanche, un massage bien-être peut vous aider à relâcher les tensions du quotidien et améliorer votre confort général.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"C'est remboursé par la sécu ?" <span class="faq-icon">+</span></div><div class="faq-a">Non, le massage bien-être n'est pas remboursé par l'Assurance Maladie. Certaines mutuelles proposent des remboursements partiels — renseignez-vous auprès de la vôtre.</div></div>
-        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"J'ai une hernie discale, je peux ?" <span class="faq-icon">+</span></div><div class="faq-a">Avant de démarrer, je vous demanderai de me préciser votre situation. Selon votre état, j'adapterai le soin ou nous le reporterons si ce n'est pas le bon moment.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">"C'est remboursé par la sécu ?" <span class="faq-icon">+</span></div><div class="faq-a">Non, le massage bien-être n'est pas un acte médical. Certaines mutuelles proposent des remboursements partiels — renseignez-vous auprès de la vôtre.</div></div>
       </div>
     </div>
 
     <!-- MODULE 4 -->
     <div id="view-module-4" class="module-view">
-      <button class="back-btn" onclick="showDashboard()">← Retour</button>
+      <button class="back-btn" onclick="showDashboard()">← Retour à l'accueil</button>
       <div class="module-header" data-emoji="🤝"><div class="mod-label">Module 4</div><div class="mod-title">Relation Client & Suivi</div><div class="mod-subtitle">C'est l'avant et l'après qui font la différence</div></div>
-      <div class="section-block"><div class="section-label">Protocole d'Accueil — 5 Étapes</div>
-        <div class="form-card"><div class="steps-list">
-          <div class="step-item"><div class="step-num">1</div><div class="step-content"><div class="step-title">L'accueil</div><div class="step-desc">Accueillez chaleureusement, proposez de l'eau, invitez à s'asseoir quelques minutes</div></div></div>
-          <div class="step-item"><div class="step-num">2</div><div class="step-content"><div class="step-title">L'entretien préalable</div><div class="step-desc">Questionnaire santé, motif de la venue, zones à privilégier ou éviter, pression souhaitée</div></div></div>
-          <div class="step-item"><div class="step-num">3</div><div class="step-content"><div class="step-title">L'installation</div><div class="step-desc">Expliquez le déroulement, laissez le client s'installer, assurez-vous de son confort</div></div></div>
-          <div class="step-item"><div class="step-num">4</div><div class="step-content"><div class="step-title">Le soin</div><div class="step-desc">Demandez un retour à mi-séance si c'est la première fois (pression, température, confort)</div></div></div>
-          <div class="step-item"><div class="step-num">5</div><div class="step-content"><div class="step-title">Le retour au calme</div><div class="step-desc">Quelques minutes de silence, eau, retour bref et sincère</div></div></div>
-        </div></div>
-      </div>
-      <div class="section-block"><div class="section-label">Situations Délicates</div>
-        <div class="alert-grid">
-          <div class="alert-card alert-blue"><div class="alert-title">💙 Un client pleure</div><div class="alert-text">Ralentissez, maintenez une main posée, restez dans le silence bienveillant. "Je suis là." Ce n'est pas à vous de "gérer".</div></div>
-          <div class="alert-card alert-orange"><div class="alert-title">🟠 Un client exprime de la douleur</div><div class="alert-text">Réduisez immédiatement la pression. Si la douleur est vive, arrêtez le soin sur cette zone. Ne forcez jamais.</div></div>
-          <div class="alert-card alert-red"><div class="alert-title">🔴 Dépasse le cadre professionnel</div><div class="alert-text">Vous avez le droit absolu d'interrompre. "Je ne me sens pas en mesure de continuer." Vous n'avez pas à vous justifier.</div></div>
-          <div class="alert-card alert-grey"><div class="alert-title">⚫ No-show client</div><div class="alert-text">Mentionnez dans vos CGV une politique d'annulation claire. Appliquez-la avec bienveillance mais régularité.</div></div>
-        </div>
-      </div>
-      <div class="section-block"><div class="section-label">Fidélisation & Suivi Doux</div>
+      <div class="section-block">
+        <div class="section-label">Fidélisation & Suivi Doux</div>
         <div class="checklist">
-          <div class="check-item" onclick="toggleCheck(this,'m4')" data-key="m4-1"><div class="check-box"></div><span class="check-label">Envoyer un message de remerciement le lendemain</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m4')" data-key="m4-2"><div class="check-box"></div><span class="check-label">Prendre des nouvelles 3-4 jours après</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m4')" data-key="m4-3"><div class="check-box"></div><span class="check-label">Proposer le prochain RDV avant que le client reparte</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m4')" data-key="m4-4"><div class="check-box"></div><span class="check-label">Créer des chèques cadeaux pour les fêtes</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m4')" data-key="m4-5"><div class="check-box"></div><span class="check-label">Proposer des forfaits (3 ou 5 séances)</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m4')" data-key="m4-6"><div class="check-box"></div><span class="check-label">Informer les clients de vos nouvelles techniques</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m4-1"><div class="check-box"></div><span class="check-label">Envoyer un message de remerciement le lendemain de la première séance</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m4-2"><div class="check-box"></div><span class="check-label">Prendre des nouvelles 3-4 jours après</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m4-3"><div class="check-box"></div><span class="check-label">Proposer le prochain rendez-vous avant que le client reparte</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m4-4"><div class="check-box"></div><span class="check-label">Créer des chèques cadeaux pour les fêtes</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m4-5"><div class="check-box"></div><span class="check-label">Proposer des forfaits (3 ou 5 séances) avec une petite remise fidélité</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m4-6"><div class="check-box"></div><span class="check-label">Informer vos clients de vos nouvelles techniques au fil de vos formations</span></div>
         </div>
       </div>
-      <div class="tip-box"><div class="tip-box-label">💡 Conseil</div>Un client qui revient vaut dix fois plus qu'un client à conquérir. Un simple message "Comment vous sentez-vous ?" le lendemain est l'un des gestes les plus puissants.</div>
+      <div class="section-block">
+        <div class="section-label">Gérer les Situations Délicates</div>
+        <div class="alert-grid">
+          <div class="alert-card alert-blue"><div class="alert-title">💙 Un client pleure pendant la séance</div><div class="alert-text">Ralentissez vos gestes, maintenez une main posée, restez dans le silence bienveillant. "Je suis là."</div></div>
+          <div class="alert-card alert-orange"><div class="alert-title">🟠 Un client exprime de la douleur</div><div class="alert-text">Réduisez immédiatement la pression. Si la douleur est vive, arrêtez le soin sur cette zone. Ne forcez jamais.</div></div>
+          <div class="alert-card alert-red"><div class="alert-title">🔴 Un client dépasse le cadre</div><div class="alert-text">Vous avez le droit absolu d'interrompre une séance. Vous n'avez pas à vous justifier.</div></div>
+          <div class="alert-card alert-grey"><div class="alert-title">⚫ Un client ne se présente pas</div><div class="alert-text">Mentionnez une politique d'annulation claire dans vos CGV et appliquez-la avec régularité.</div></div>
+        </div>
+      </div>
+      <div class="tip-box"><div class="tip-box-label">💡 Conseil En Vie de Sens</div>Un client qui revient vaut dix fois plus qu'un client à conquérir. Un simple message envoyé le lendemain est l'un des gestes les plus puissants que vous puissiez faire.</div>
     </div>
 
     <!-- MODULE 5 -->
     <div id="view-module-5" class="module-view">
-      <button class="back-btn" onclick="showDashboard()">← Retour</button>
+      <button class="back-btn" onclick="showDashboard()">← Retour à l'accueil</button>
       <div class="module-header" data-emoji="💶"><div class="mod-label">Module 5</div><div class="mod-title">Tarifs & Gestion</div><div class="mod-subtitle">Trouver l'équilibre entre valeur et accessibilité</div></div>
       <div class="section-block">
-        <div style="background:var(--teal-dark);border-radius:var(--radius);padding:28px;color:white;display:flex;align-items:center;gap:28px;margin-bottom:20px">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:700;color:var(--gold-light);line-height:1;flex-shrink:0">1€</div>
-          <div><div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:8px">La minute comme unité de référence</div><div style="font-size:14px;opacity:0.85;line-height:1.7">1 euro par minute de soin. Un massage de 60 min = 60€ minimum. Augmentez si votre technique nécessite du matériel spécifique.</div></div>
-        </div>
+        <div class="section-label">Grille Tarifaire Indicative</div>
+        <div class="table-wrap"><table class="data-table"><tr><th>Technique / Soin</th><th>Durée</th><th>Fourchette tarifaire</th></tr><tr><td>Massage dos</td><td>30 min</td><td>30 – 45 €</td></tr><tr><td>Massage californien corps entier</td><td>1h – 1h30</td><td>60 – 90 €</td></tr><tr><td>Réflexologie plantaire</td><td>45 min – 1h</td><td>50 – 75 €</td></tr><tr><td>Massage bébé (avec parent)</td><td>45 min</td><td>45 – 65 €</td></tr><tr><td>Massage femme enceinte</td><td>1h</td><td>60 – 80 €</td></tr><tr><td>Kobido / Massage visage</td><td>45 min – 1h</td><td>55 – 80 €</td></tr><tr><td>Massage sportif / deep tissue</td><td>1h – 1h30</td><td>65 – 95 €</td></tr><tr><td>Pierres chaudes, bols tibétains</td><td>1h – 1h30</td><td>70 – 110 €</td></tr><tr><td>Amma assis (entreprise)</td><td>15 – 20 min</td><td>20 – 30 €</td></tr><tr><td>Forfait fidélité (5 séances)</td><td>Variable</td><td>Remise 10 à 15%</td></tr></table></div>
       </div>
-      <div class="section-block"><div class="section-label">Grille Tarifaire</div>
-        <div class="table-wrap"><table class="data-table"><tr><th>Technique / Soin</th><th>Durée</th><th>Fourchette</th></tr>
-          <tr><td>Massage dos</td><td>30 min</td><td>30–45 €</td></tr>
-          <tr><td>Massage californien corps entier</td><td>1h–1h30</td><td>60–90 €</td></tr>
-          <tr><td>Réflexologie plantaire</td><td>45min–1h</td><td>50–75 €</td></tr>
-          <tr><td>Massage femme enceinte</td><td>1h</td><td>60–80 €</td></tr>
-          <tr><td>Kobido / Massage visage</td><td>45min–1h</td><td>55–80 €</td></tr>
-          <tr><td>Massage sportif / deep tissue</td><td>1h–1h30</td><td>65–95 €</td></tr>
-          <tr><td>Lomi-lomi ou balinais</td><td>1h30</td><td>70–100 €</td></tr>
-          <tr><td>Pierres chaudes, bols tibétains</td><td>1h–1h30</td><td>70–110 €</td></tr>
-          <tr><td>Amma assis (entreprise)</td><td>15–20 min</td><td>20–30 €</td></tr>
-          <tr><td>Forfait fidélité (5 séances)</td><td>Variable</td><td>Remise 10–15%</td></tr>
-        </table></div>
-      </div>
-      <div class="section-block"><div class="section-label">Calculateur de Rentabilité</div>
-        <div class="calc-card"><div class="calc-title">🧮 Mon Tarif Minimum</div>
+      <div class="section-block">
+        <div class="section-label">Calculateur de Rentabilité</div>
+        <div class="calc-card">
+          <div class="calc-title">🧮 Mon Tarif Minimum</div>
           <div class="calc-grid">
             <div class="calc-field"><label>Revenu mensuel net souhaité (€)</label><input class="calc-input" type="number" id="calc-revenu" placeholder="ex: 2000" oninput="calcTarif()"></div>
-            <div class="calc-field"><label>Séances par semaine</label><input class="calc-input" type="number" id="calc-seances" placeholder="ex: 15" oninput="calcTarif()"></div>
+            <div class="calc-field"><label>Séances par semaine envisagées</label><input class="calc-input" type="number" id="calc-seances" placeholder="ex: 15" oninput="calcTarif()"></div>
             <div class="calc-field"><label>Charges mensuelles (€)</label><input class="calc-input" type="number" id="calc-charges" placeholder="ex: 300" oninput="calcTarif()"></div>
-            <div class="calc-field"><label>Cotisations sociales</label><input class="calc-input" value="22%" readonly style="opacity:0.6"></div>
+            <div class="calc-field"><label>Cotisations sociales micro-ent. : 22%</label><input class="calc-input" value="22%" readonly style="opacity:0.6"></div>
           </div>
-          <div class="calc-result"><div class="calc-result-num" id="calc-result">— €</div><div class="calc-result-label">tarif minimum par séance d'1h</div></div>
+          <div class="calc-result"><div class="calc-result-num" id="calc-result">— €</div><div class="calc-result-label">tarif minimum par séance d'1h pour atteindre votre objectif</div></div>
         </div>
       </div>
     </div>
 
     <!-- MODULE 6 -->
     <div id="view-module-6" class="module-view">
-      <button class="back-btn" onclick="showDashboard()">← Retour</button>
+      <button class="back-btn" onclick="showDashboard()">← Retour à l'accueil</button>
       <div class="module-header" data-emoji="📣"><div class="mod-label">Module 6</div><div class="mod-title">Se Lancer en Communication</div><div class="mod-subtitle">Votre première présence, c'est votre premier soin</div></div>
-      <div class="section-block"><div class="section-label">Check-list — Les 30 Premiers Jours</div>
+      <div class="info-box">Pas besoin d'un budget publicitaire. Trois outils bien utilisés suffisent pour démarrer : Google My Business, Instagram et un outil de prise de rendez-vous en ligne.</div>
+      <div class="section-block">
+        <div class="section-label">Check-list — Les 30 Premiers Jours</div>
         <div class="checklist">
-          <div class="check-item" onclick="toggleCheck(this,'m6')" data-key="m6-1"><div class="check-box"></div><span class="check-label">Statut créé et SIRET reçu</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m6')" data-key="m6-2"><div class="check-box"></div><span class="check-label">Texte de présentation rédigé et publié partout</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m6')" data-key="m6-3"><div class="check-box"></div><span class="check-label">Fiche Google My Business créée et vérifiée</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m6')" data-key="m6-4"><div class="check-box"></div><span class="check-label">Compte Instagram Pro créé avec bio complète</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m6')" data-key="m6-5"><div class="check-box"></div><span class="check-label">Outil de réservation en ligne activé</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m6')" data-key="m6-6"><div class="check-box"></div><span class="check-label">Post de lancement publié sur les réseaux</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m6')" data-key="m6-7"><div class="check-box"></div><span class="check-label">Premiers avis Google demandés</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m6')" data-key="m6-8"><div class="check-box"></div><span class="check-label">Séance découverte proposée à tarif réduit</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m6-1"><div class="check-box"></div><span class="check-label">Statut créé et SIRET reçu</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m6-2"><div class="check-box"></div><span class="check-label">Texte de présentation rédigé et publié partout</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m6-3"><div class="check-box"></div><span class="check-label">Fiche Google My Business créée et vérifiée</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m6-4"><div class="check-box"></div><span class="check-label">Compte Instagram Pro créé avec bio complète</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m6-5"><div class="check-box"></div><span class="check-label">Outil de réservation en ligne activé</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m6-6"><div class="check-box"></div><span class="check-label">Post de lancement publié sur les réseaux</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m6-7"><div class="check-box"></div><span class="check-label">Premiers avis Google demandés à votre entourage</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m6-8"><div class="check-box"></div><span class="check-label">Séance découverte proposée à tarif réduit</span></div>
         </div>
       </div>
-      <div class="section-block"><div class="section-label">Outils de Réservation</div>
-        <div class="table-wrap"><table class="data-table"><tr><th>Outil</th><th>Points forts</th><th>Tarif</th></tr>
-          <tr><td>Planity</td><td>Conçu pour les soins bien-être, rappels SMS</td><td>Gratuit puis ~29€/mois</td></tr>
-          <tr><td>Reservio</td><td>Simple, multiservices, notifications auto</td><td>Gratuit jusqu'à 40 résa/mois</td></tr>
-          <tr><td>SimplyBook</td><td>Très complet, paiement en ligne</td><td>Gratuit jusqu'à 50 résa/mois</td></tr>
-          <tr><td>Cal.com</td><td>Open source, lien unique à partager</td><td>Gratuit</td></tr>
-        </table></div>
+      <div class="section-block">
+        <div class="section-label">Outils de Réservation en Ligne</div>
+        <div class="table-wrap"><table class="data-table"><tr><th>Outil</th><th>Points forts</th><th>Tarif</th></tr><tr><td>Planity</td><td>Conçu pour les soins bien-être, agenda, rappels SMS</td><td>Gratuit puis ~29€/mois</td></tr><tr><td>Reservio</td><td>Simple, multiservices, intégration site web</td><td>Gratuit jusqu'à 40 résa/mois</td></tr><tr><td>SimplyBook</td><td>Très complet, page personnalisable</td><td>Gratuit jusqu'à 50 résa/mois</td></tr><tr><td>Cal.com</td><td>Open source, simple, lien unique à partager</td><td>Gratuit</td></tr></table></div>
       </div>
     </div>
 
     <!-- MODULE 7 -->
     <div id="view-module-7" class="module-view">
-      <button class="back-btn" onclick="showDashboard()">← Retour</button>
-      <div class="module-header" data-emoji="🌱"><div class="mod-label">Module 7</div><div class="mod-title">Grandir & Se Développer</div><div class="mod-subtitle">Votre cursus ouvre des portes</div></div>
-      <div class="section-block"><div class="section-label">Débouchés au-delà du Cabinet</div>
+      <button class="back-btn" onclick="showDashboard()">← Retour à l'accueil</button>
+      <div class="module-header" data-emoji="🌱"><div class="mod-label">Module 7</div><div class="mod-title">Grandir & Se Développer</div><div class="mod-subtitle">Votre cursus ouvre des portes que vous n'imaginez peut-être pas encore</div></div>
+      <div class="section-block">
+        <div class="section-label">Les Débouchés au-delà du Cabinet Privé</div>
         <div class="opp-grid">
           <div class="opp-card"><div class="opp-emoji">🏢</div><div class="opp-title">Entreprises</div><div class="opp-desc">Amma assis, séances bien-être, QVT — marché en forte croissance</div></div>
           <div class="opp-card"><div class="opp-emoji">🏥</div><div class="opp-title">EHPAD & Seniors</div><div class="opp-desc">Massages adaptés, toucher-relationnel — besoin immense et peu couvert</div></div>
-          <div class="opp-card"><div class="opp-emoji">🤱</div><div class="opp-title">Maternités & PMI</div><div class="opp-desc">Massage bébé, postnatal, périnatal</div></div>
-          <div class="opp-card"><div class="opp-emoji">🏨</div><div class="opp-title">Spas & Hôtels</div><div class="opp-desc">Missions ponctuelles ou contrats réguliers</div></div>
-          <div class="opp-card"><div class="opp-emoji">🎪</div><div class="opp-title">Événementiel</div><div class="opp-desc">Mariages, séminaires, salons bien-être</div></div>
-          <div class="opp-card"><div class="opp-emoji">🏠</div><div class="opp-title">À Domicile</div><div class="opp-desc">Personnes à mobilité réduite, zones rurales</div></div>
+          <div class="opp-card"><div class="opp-emoji">🤱</div><div class="opp-title">Maternités & PMI</div><div class="opp-desc">Massage bébé, postnatal, accompagnement périnatal</div></div>
+          <div class="opp-card"><div class="opp-emoji">🏨</div><div class="opp-title">Spas & Hôtels</div><div class="opp-desc">Missions ponctuelles ou contrats réguliers comme praticien(ne) externe</div></div>
+          <div class="opp-card"><div class="opp-emoji">🎪</div><div class="opp-title">Événementiel</div><div class="opp-desc">Mariages, séminaires, salons bien-être, marchés de Noël</div></div>
+          <div class="opp-card"><div class="opp-emoji">🏠</div><div class="opp-title">À Domicile</div><div class="opp-desc">Personnes à mobilité réduite, clients fidèles, zones rurales</div></div>
         </div>
       </div>
-      <div class="section-block"><div class="section-label">Prendre Soin de Soi</div>
+      <div class="section-block">
+        <div class="section-label">Prendre Soin de Soi</div>
         <div class="checklist">
-          <div class="check-item" onclick="toggleCheck(this,'m7')" data-key="m7-1"><div class="check-box"></div><span class="check-label">Recevoir des massages régulièrement (au moins 1x/mois)</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m7')" data-key="m7-2"><div class="check-box"></div><span class="check-label">Limiter le nombre de séances quotidiennes (4-5 maximum)</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m7')" data-key="m7-3"><div class="check-box"></div><span class="check-label">Pratiquer des exercices de protection et d'ancrage</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m7')" data-key="m7-4"><div class="check-box"></div><span class="check-label">Entretenir votre réseau de praticien(ne)s</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m7')" data-key="m7-5"><div class="check-box"></div><span class="check-label">Prévoir des formations régulières</span></div>
-          <div class="check-item" onclick="toggleCheck(this,'m7')" data-key="m7-6"><div class="check-box"></div><span class="check-label">Prendre de vraies vacances sans culpabilité</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m7-1"><div class="check-box"></div><span class="check-label">Recevoir des massages régulièrement vous-même (au moins une fois par mois)</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m7-2"><div class="check-box"></div><span class="check-label">Limiter le nombre de séances quotidiennes (4 à 5 maximum)</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m7-3"><div class="check-box"></div><span class="check-label">Pratiquer des exercices de protection et d'ancrage avant et après les séances</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m7-4"><div class="check-box"></div><span class="check-label">Entretenir votre réseau de praticien(ne)s</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m7-5"><div class="check-box"></div><span class="check-label">Prévoir des formations régulières</span></div>
+          <div class="check-item" onclick="toggleCheck(this)" data-key="m7-6"><div class="check-box"></div><span class="check-label">Prendre de vraies vacances sans culpabilité</span></div>
         </div>
       </div>
       <div class="tip-box"><div class="tip-box-label">💌 Mot de la fondatrice</div>Ce carnet n'est pas un manuel à lire une fois et à ranger. C'est un compagnon de route — revenez-y, annotez-le, complétez-le au fil de votre pratique.<br><br><strong style="color:var(--gold)">— Anne-Sophie Dufeutrelle, fondatrice En Vie de Sens</strong></div>
@@ -632,7 +669,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
 
     <!-- MODULE 8 — JOURNAL -->
     <div id="view-module-8" class="module-view">
-      <button class="back-btn" onclick="showDashboard()">← Retour</button>
+      <button class="back-btn" onclick="showDashboard()">← Retour à l'accueil</button>
       <div class="module-header" data-emoji="✍️"><div class="mod-label">Bonus</div><div class="mod-title">Journal de Réflexion</div><div class="mod-subtitle">Vos pensées, vos apprentissages, votre évolution</div></div>
       <div class="section-block">
         <div class="section-label">Prompts de Réflexion</div>
@@ -645,15 +682,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
           <button class="prompt-btn" onclick="setPrompt(this.innerText)">Quel objectif je me fixe pour la semaine prochaine ?</button>
         </div>
         <div class="form-card">
-          <div class="field-group"><label class="field-label">Votre réflexion du jour</label><textarea class="field-textarea" id="journal-text" style="min-height:120px" placeholder="Cliquez sur un prompt ou écrivez librement..."></textarea></div>
-          <button onclick="saveJournalEntry()" style="background:var(--teal);color:white;border:none;border-radius:8px;padding:12px 24px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">✍️ Enregistrer</button>
+          <div class="field-group"><label class="field-label">Votre réflexion du jour</label><textarea class="field-textarea" id="journal-text" style="min-height:120px" placeholder="Cliquez sur un prompt ci-dessus ou écrivez librement..."></textarea></div>
+          <button onclick="saveJournalEntry()" style="background:var(--teal);color:white;border:none;border-radius:8px;padding:12px 24px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">✍️ Enregistrer cette réflexion</button>
         </div>
         <div class="journal-entries" id="journal-entries"></div>
       </div>
       <div class="section-block">
-        <div class="section-label">Mur Collaboratif</div>
+        <div class="section-label">Mur Collaboratif — Astuces & Encouragements</div>
         <div class="note-form">
-          <div style="font-size:14px;font-weight:600;margin-bottom:14px;color:var(--teal-dark)">Partager une astuce à la communauté 🌿</div>
+          <div class="note-form-title">Partager une astuce ou un encouragement à la communauté 🌿</div>
           <div class="note-type-btns">
             <button class="note-type-btn active" onclick="selectNoteType(this,'💡 Astuce')">💡 Astuce</button>
             <button class="note-type-btn" onclick="selectNoteType(this,'🌟 Conseil')">🌟 Conseil</button>
@@ -669,317 +706,254 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);m
   </main>
 </div>
 
+<div class="save-indicator" id="save-indicator">☁️ Sauvegardé</div>
+
 <script>
-// ─── CONFIG ───
 const SUPABASE_URL = 'https://cseraezrumlvsowedvya.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_jTOSLIzagYSSRnLw7a5SCw_eauMuz2A';
-const BREVO_API_KEY = 'REMPLACE_PAR_TA_CLÉ_BREVO';
-const BREVO_LIST_ID = 16;
-
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+const BREVO_FUNCTION_URL = 'https://cseraezrumlvsowedvya.supabase.co/functions/v1/send-to-brevo';
 
 let currentUser = null;
-let userData = { checks:{}, journal_entries:[], notes:[] };
-let saveTimeout = null;
+let state = { checks: {}, journalEntries: [], notes: [] };
+let saveTimer = null;
 
-// ─── QUOTES ───
 const quotes = [
-  "Ce carnet n'est pas un manuel. C'est une aide à la pensée. Revenez-y, annotez-le au fil de votre pratique.",
-  "L'odeur, la température et la musique sont les trois premiers éléments que votre client perçoit.",
+  "Ce carnet n'est pas un manuel. C'est une aide à la pensée. Revenez-y, annotez-le, complétez-le au fil de votre pratique.",
+  "L'odeur, la température et la musique sont les trois premiers éléments que votre client perçoit avant même que vous le touchiez.",
   "Un client qui revient vaut dix fois plus qu'un client à conquérir.",
   "Prendre soin de soi n'est pas un luxe — c'est une nécessité professionnelle.",
   "La qualité de votre relation client se joue bien avant et bien après la séance."
 ];
 
-// ─── BREVO ───
-async function sendToBrevo(prenom, email) {
-  try {
-    await fetch('https://api.brevo.com/v3/contacts', {
-      method:'POST',
-      headers:{'Content-Type':'application/json','api-key':BREVO_API_KEY},
-      body:JSON.stringify({email,attributes:{PRENOM:prenom},listIds:[BREVO_LIST_ID],updateEnabled:true})
-    });
-  } catch(e){ console.warn('Brevo:', e); }
+const defaultNotes = [
+  { type: '💡 Astuce', text: 'Toujours noter les préférences de pression dès la première séance. Les clients adorent que vous vous en souveniez !', color: 'sticky-teal', rot: '-1.5deg' },
+  { type: '🌟 Conseil', text: "Investissez dans un bon diffuseur dès le début. L'ambiance olfactive change tout à l'expérience client.", color: 'sticky-gold', rot: '1deg' },
+  { type: '💬 Témoignage', text: "Après 3 mois, j'ai osé augmenter mes tarifs. Aucun client n'est parti. La confiance vient de la qualité du soin.", color: 'sticky-rose', rot: '-0.8deg' },
+  { type: '💡 Astuce', text: 'Un SMS "Comment vous sentez-vous ?" le lendemain transforme un client ponctuel en fidèle.', color: 'sticky-gold', rot: '1.8deg' },
+];
+
+async function sbFetch(path, options = {}) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    ...options,
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation', ...(options.headers || {}) }
+  });
+  const text = await res.text();
+  return { ok: res.ok, status: res.status, data: text ? JSON.parse(text) : null };
 }
 
-// ─── AUTH ───
+async function hashPassword(password) {
+  const msgBuffer = new TextEncoder().encode(password);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 function switchTab(tab) {
-  document.querySelectorAll('.gate-tab').forEach((t,i) => t.classList.toggle('active', (tab==='inscription'&&i===0)||(tab==='connexion'&&i===1)));
-  document.getElementById('form-inscription').style.display = tab==='inscription' ? 'flex' : 'none';
-  document.getElementById('form-connexion').style.display = tab==='connexion' ? 'flex' : 'none';
-}
-
-function showError(id, msg) {
-  const el = document.getElementById(id);
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 4000);
+  document.querySelectorAll('.gate-tab-btn').forEach((b, i) => b.classList.toggle('active', (i===0&&tab==='inscription')||(i===1&&tab==='connexion')));
+  document.getElementById('tab-inscription').style.display = tab === 'inscription' ? '' : 'none';
+  document.getElementById('tab-connexion').style.display = tab === 'connexion' ? '' : 'none';
+  document.getElementById('ins-error').classList.remove('visible');
+  document.getElementById('con-error').classList.remove('visible');
 }
 
 async function inscrire() {
-  const prenom = document.getElementById('reg-prenom').value.trim();
-  const email = document.getElementById('reg-email').value.trim();
-  const password = document.getElementById('reg-password').value;
-  if (!prenom||!email||!password) { showError('reg-error','Merci de remplir tous les champs 🌿'); return; }
-  if (password.length < 6) { showError('reg-error','Le mot de passe doit faire au moins 6 caractères'); return; }
-
-  const btn = document.querySelector('#form-inscription .gate-btn');
+  const prenom = document.getElementById('ins-prenom').value.trim();
+  const email = document.getElementById('ins-email').value.trim().toLowerCase();
+  const password = document.getElementById('ins-password').value;
+  const errEl = document.getElementById('ins-error');
+  const btn = document.getElementById('ins-btn');
+  errEl.classList.remove('visible');
+  if (!prenom || !email || !password) { errEl.textContent = 'Merci de remplir tous les champs 🌿'; errEl.classList.add('visible'); return; }
+  if (!email.includes('@')) { errEl.textContent = 'Adresse email invalide'; errEl.classList.add('visible'); return; }
+  if (password.length < 6) { errEl.textContent = 'Le mot de passe doit faire au moins 6 caractères'; errEl.classList.add('visible'); return; }
   btn.textContent = '⏳ Création de votre espace...'; btn.disabled = true;
-
-  // Créer compte Supabase Auth
-  const { data, error } = await sb.auth.signUp({ email, password, options:{ data:{ prenom } } });
-  if (error) { showError('reg-error', error.message); btn.textContent='🚀 Créer mon espace gratuit'; btn.disabled=false; return; }
-
-  // Créer entrée dans users_data
-  await sb.from('users_data').upsert({ email, prenom, password_hash:'auth', checks:{}, journal_entries:[], notes:[] }, { onConflict:'email' });
-
-  // Envoyer à Brevo
-  await sendToBrevo(prenom, email);
-
-  currentUser = { email, prenom };
-  await loadUserData();
-  openApp(prenom);
+  try {
+    const hash = await hashPassword(password);
+    const check = await sbFetch(`users_data?email=eq.${encodeURIComponent(email)}&select=id`);
+    if (check.data && check.data.length > 0) { errEl.textContent = 'Cet email est déjà utilisé. Connectez-vous ! 👉'; errEl.classList.add('visible'); btn.textContent = '🚀 Accéder à mon Carnet de Route gratuit'; btn.disabled = false; return; }
+    const create = await sbFetch('users_data', { method: 'POST', body: JSON.stringify({ email, prenom, password_hash: hash, checks: {}, journal_entries: [], notes: [] }) });
+    if (!create.ok) throw new Error('Erreur création');
+    sendToBrevo(prenom, email).catch(() => {});
+    currentUser = { email, prenom, id: create.data[0].id };
+    state = { checks: {}, journalEntries: [], notes: [] };
+    ouvrirApp();
+  } catch(e) { errEl.textContent = 'Une erreur est survenue. Réessayez.'; errEl.classList.add('visible'); btn.textContent = '🚀 Accéder à mon Carnet de Route gratuit'; btn.disabled = false; }
 }
 
 async function connecter() {
-  const email = document.getElementById('login-email').value.trim();
-  const password = document.getElementById('login-password').value;
-  if (!email||!password) { showError('login-error','Merci de remplir tous les champs 🌿'); return; }
-
-  const btn = document.querySelector('#form-connexion .gate-btn');
+  const email = document.getElementById('con-email').value.trim().toLowerCase();
+  const password = document.getElementById('con-password').value;
+  const errEl = document.getElementById('con-error');
+  const btn = document.getElementById('con-btn');
+  errEl.classList.remove('visible');
+  if (!email || !password) { errEl.textContent = 'Merci de remplir tous les champs'; errEl.classList.add('visible'); return; }
   btn.textContent = '⏳ Connexion...'; btn.disabled = true;
-
-  const { data, error } = await sb.auth.signInWithPassword({ email, password });
-  if (error) { showError('login-error','Email ou mot de passe incorrect'); btn.textContent='🔐 Accéder à mon espace'; btn.disabled=false; return; }
-
-  const prenom = data.user?.user_metadata?.prenom || email.split('@')[0];
-  currentUser = { email, prenom };
-  await loadUserData();
-  openApp(prenom);
+  try {
+    const hash = await hashPassword(password);
+    const res = await sbFetch(`users_data?email=eq.${encodeURIComponent(email)}&select=*`);
+    if (!res.data || res.data.length === 0) { errEl.textContent = 'Email introuvable. Inscrivez-vous ! 👈'; errEl.classList.add('visible'); btn.textContent = '🔑 Me connecter'; btn.disabled = false; return; }
+    const user = res.data[0];
+    if (user.password_hash !== hash) { errEl.textContent = 'Mot de passe incorrect'; errEl.classList.add('visible'); btn.textContent = '🔑 Me connecter'; btn.disabled = false; return; }
+    currentUser = { email: user.email, prenom: user.prenom, id: user.id };
+    state = { checks: user.checks || {}, journalEntries: user.journal_entries || [], notes: user.notes || [] };
+    ouvrirApp();
+  } catch(e) { errEl.textContent = 'Erreur de connexion. Réessayez.'; errEl.classList.add('visible'); btn.textContent = '🔑 Me connecter'; btn.disabled = false; }
 }
 
-async function deconnecter() {
-  await sb.auth.signOut();
-  currentUser = null;
-  userData = { checks:{}, journal_entries:[], notes:[] };
+function deconnecter() {
+  currentUser = null; state = { checks: {}, journalEntries: [], notes: [] };
   document.getElementById('app').classList.remove('visible');
   document.getElementById('gate').classList.remove('hidden');
   switchTab('connexion');
+  document.getElementById('con-email').value = '';
+  document.getElementById('con-password').value = '';
+  document.getElementById('con-btn').textContent = '🔑 Me connecter';
+  document.getElementById('con-btn').disabled = false;
 }
 
-// ─── SUPABASE DATA ───
-async function loadUserData() {
+async function sauvegarder() {
   if (!currentUser) return;
-  const { data } = await sb.from('users_data').select('*').eq('email', currentUser.email).single();
-  if (data) {
-    userData.checks = data.checks || {};
-    userData.journal_entries = data.journal_entries || [];
-    userData.notes = data.notes || [];
-    currentUser.prenom = data.prenom || currentUser.prenom;
-  }
+  try {
+    await sbFetch(`users_data?id=eq.${currentUser.id}`, { method: 'PATCH', body: JSON.stringify({ checks: state.checks, journal_entries: state.journalEntries, notes: state.notes, updated_at: new Date().toISOString() }) });
+    const ind = document.getElementById('save-indicator');
+    ind.classList.add('visible');
+    setTimeout(() => ind.classList.remove('visible'), 2000);
+  } catch(e) { console.warn('Save error', e); }
 }
 
-function scheduleSave() {
-  if (saveTimeout) clearTimeout(saveTimeout);
-  saveTimeout = setTimeout(saveUserData, 1500);
+function scheduleSave() { clearTimeout(saveTimer); saveTimer = setTimeout(sauvegarder, 1500); }
+
+async function sendToBrevo(prenom, email) {
+  try {
+    await fetch(BREVO_FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+      body: JSON.stringify({ prenom, email })
+    });
+  } catch(e) { console.warn('Brevo function error', e); }
 }
 
-async function saveUserData() {
-  if (!currentUser) return;
-  await sb.from('users_data').update({
-    checks: userData.checks,
-    journal_entries: userData.journal_entries,
-    notes: userData.notes,
-    updated_at: new Date().toISOString()
-  }).eq('email', currentUser.email);
-  showSaveIndicator();
-}
-
-function showSaveIndicator() {
-  const el = document.getElementById('save-indicator');
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2000);
-}
-
-// ─── OPEN APP ───
-function openApp(prenom) {
+function ouvrirApp() {
   document.getElementById('gate').classList.add('hidden');
   document.getElementById('app').classList.add('visible');
-  document.getElementById('hero-title').textContent = `Bonjour ${prenom} !`;
-  document.getElementById('user-name-display').textContent = prenom;
-  document.getElementById('user-avatar').textContent = prenom.charAt(0).toUpperCase();
-  document.getElementById('daily-quote').textContent = quotes[Math.floor(Math.random()*quotes.length)];
-  loadChecks();
-  renderNotes();
-  renderJournal();
-  updateProgress();
+  document.getElementById('hero-title').textContent = `Bonjour ${currentUser.prenom} !`;
+  document.getElementById('user-name-display').textContent = currentUser.prenom;
+  document.getElementById('user-avatar').textContent = currentUser.prenom.charAt(0).toUpperCase();
+  document.getElementById('daily-quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+  loadChecks(); renderNotes(); renderJournal(); updateProgress(); showDashboard();
 }
 
-// ─── AUTO LOGIN ───
-async function checkSession() {
-  const { data:{ session } } = await sb.auth.getSession();
-  if (session?.user) {
-    const email = session.user.email;
-    const prenom = session.user.user_metadata?.prenom || email.split('@')[0];
-    currentUser = { email, prenom };
-    await loadUserData();
-    openApp(currentUser.prenom);
-  }
-}
-
-// ─── CHECKS ───
-function toggleCheck(el, module) {
+function toggleCheck(el) {
   const key = el.dataset.key;
   el.classList.toggle('checked');
   const box = el.querySelector('.check-box');
-  if (el.classList.contains('checked')) { box.textContent='✓'; userData.checks[key]=true; }
-  else { box.textContent=''; delete userData.checks[key]; }
-  updateProgress();
-  scheduleSave();
+  if (el.classList.contains('checked')) { box.textContent = '✓'; state.checks[key] = true; }
+  else { box.textContent = ''; delete state.checks[key]; }
+  updateProgress(); scheduleSave();
 }
 
 function loadChecks() {
   document.querySelectorAll('.check-item[data-key]').forEach(el => {
-    const key = el.dataset.key;
-    if (userData.checks[key]) { el.classList.add('checked'); el.querySelector('.check-box').textContent='✓'; }
-    else { el.classList.remove('checked'); el.querySelector('.check-box').textContent=''; }
+    if (state.checks[el.dataset.key]) { el.classList.add('checked'); el.querySelector('.check-box').textContent = '✓'; }
+    else { el.classList.remove('checked'); el.querySelector('.check-box').textContent = ''; }
   });
 }
 
-// ─── PROGRESS ───
 const moduleChecks = {
-  m1:['m1-t1','m1-t2','m1-t3','m1-t4','m1-t5','m1-t6','m1-t7','m1-p1','m1-p2','m1-p3','m1-p4','m1-p5','m1-e1','m1-e2','m1-e3','m1-e4','m1-e5','m1-e6','m1-r1','m1-r2','m1-r3','m1-r4','m1-r5','m1-r6'],
-  m2:['m2-1','m2-2','m2-3','m2-4','m2-5','m2-6','m2-7'],
-  m3:['m3-ci1','m3-ci2','m3-ci3','m3-ci4','m3-ci5','m3-ci6','m3-ci7','m3-ci8'],
-  m4:['m4-1','m4-2','m4-3','m4-4','m4-5','m4-6'],
-  m5:[],m5b:[],
-  m6:['m6-1','m6-2','m6-3','m6-4','m6-5','m6-6','m6-7','m6-8'],
-  m7:['m7-1','m7-2','m7-3','m7-4','m7-5','m7-6'],
+  m1: ['m1-t1','m1-t2','m1-t3','m1-t4','m1-t5','m1-t6','m1-t7','m1-p1','m1-p2','m1-p3','m1-p4','m1-p5','m1-e1','m1-e2','m1-e3','m1-e4','m1-e5','m1-e6','m1-r1','m1-r2','m1-r3','m1-r4','m1-r5','m1-r6'],
+  m2: ['m2-1','m2-2','m2-3','m2-4','m2-5','m2-6','m2-7'],
+  m3: ['m3-ci1','m3-ci2','m3-ci3','m3-ci4','m3-ci5','m3-ci6','m3-ci7','m3-ci8'],
+  m4: ['m4-1','m4-2','m4-3','m4-4','m4-5','m4-6'],
+  m6: ['m6-1','m6-2','m6-3','m6-4','m6-5','m6-6','m6-7','m6-8'],
+  m7: ['m7-1','m7-2','m7-3','m7-4','m7-5','m7-6'],
 };
 
 function updateProgress() {
-  let total=0, done=0;
-  [1,2,3,4,6,7].forEach(i => {
-    const keys = moduleChecks[`m${i}`];
-    const d = keys.filter(k=>userData.checks[k]).length;
-    const t = keys.length;
-    total+=t; done+=d;
-    const pct = t>0?Math.round((d/t)*100):0;
-    const bar = document.getElementById(`m${i}-bar`);
-    const pctEl = document.getElementById(`m${i}-pct`);
-    if(bar) bar.style.width=pct+'%';
-    if(pctEl) pctEl.textContent=pct+'%';
+  let total = 0, done = 0;
+  Object.entries(moduleChecks).forEach(([mod, keys]) => {
+    const n = parseInt(mod.replace('m',''));
+    const d = keys.filter(k => state.checks[k]).length;
+    const t = keys.length; total += t; done += d;
+    const pct = t > 0 ? Math.round((d/t)*100) : 0;
+    const bar = document.getElementById(`m${n}-bar`);
+    const pctEl = document.getElementById(`m${n}-pct`);
+    if (bar) bar.style.width = pct + '%';
+    if (pctEl) pctEl.textContent = pct + '%';
   });
-  const globalPct = total>0?Math.round((done/total)*100):0;
-  document.getElementById('hero-bar').style.width=globalPct+'%';
-  document.getElementById('hero-pct').textContent=globalPct+'% complété';
-  document.getElementById('header-bar').style.width=globalPct+'%';
-  document.getElementById('header-pct').textContent=globalPct+'%';
+  const globalPct = total > 0 ? Math.round((done/total)*100) : 0;
+  document.getElementById('hero-bar').style.width = globalPct + '%';
+  document.getElementById('hero-pct').textContent = globalPct + '% complété';
+  document.getElementById('header-bar').style.width = globalPct + '%';
+  document.getElementById('header-pct').textContent = globalPct + '%';
 }
 
-// ─── NAVIGATION ───
 function showDashboard() {
-  document.getElementById('view-dashboard').style.display='block';
-  document.querySelectorAll('.module-view').forEach(v=>v.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+  document.getElementById('view-dashboard').style.display = 'block';
+  document.querySelectorAll('.module-view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach((t,i) => t.classList.toggle('active', i===0));
   window.scrollTo(0,0);
 }
 
 function showModule(n) {
-  document.getElementById('view-dashboard').style.display='none';
-  document.querySelectorAll('.module-view').forEach(v=>v.classList.remove('active'));
-  const view=document.getElementById(`view-module-${n}`);
-  if(view) view.classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',i===n));
+  document.getElementById('view-dashboard').style.display = 'none';
+  document.querySelectorAll('.module-view').forEach(v => v.classList.remove('active'));
+  const view = document.getElementById(`view-module-${n}`);
+  if (view) view.classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach((t,i) => t.classList.toggle('active', i===n));
   window.scrollTo(0,0);
 }
 
-// ─── FAQ ───
 function toggleFaq(el) {
-  const ans=el.nextElementSibling;
-  const icon=el.querySelector('.faq-icon');
-  ans.classList.toggle('open');
-  icon.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+  el.querySelector('.faq-icon').classList.toggle('open');
 }
 
-// ─── CALCULATOR ───
 function calcTarif() {
-  const rev=parseFloat(document.getElementById('calc-revenu').value)||0;
-  const seances=parseFloat(document.getElementById('calc-seances').value)||0;
-  const charges=parseFloat(document.getElementById('calc-charges').value)||0;
-  const el=document.getElementById('calc-result');
-  if(rev>0&&seances>0){
-    const seancesMois=seances*4.3;
-    const tarif=(rev+charges)/(1-0.22)/seancesMois;
-    el.textContent=Math.ceil(tarif)+' €';
-  } else { el.textContent='— €'; }
+  const rev = parseFloat(document.getElementById('calc-revenu').value) || 0;
+  const seances = parseFloat(document.getElementById('calc-seances').value) || 0;
+  const charges = parseFloat(document.getElementById('calc-charges').value) || 0;
+  const el = document.getElementById('calc-result');
+  if (rev > 0 && seances > 0) { el.textContent = Math.ceil((rev + charges) / (1 - 0.22) / (seances * 4.3)) + ' €'; }
+  else { el.textContent = '— €'; }
 }
 
-// ─── JOURNAL ───
-function setPrompt(text) {
-  document.getElementById('journal-text').value=text+'\n\n';
-  document.getElementById('journal-text').focus();
-}
+function setPrompt(text) { document.getElementById('journal-text').value = text + '\n\n'; document.getElementById('journal-text').focus(); }
 
-async function saveJournalEntry() {
-  const text=document.getElementById('journal-text').value.trim();
-  if(!text) return;
-  const entry={text,date:new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'})};
-  userData.journal_entries.unshift(entry);
-  document.getElementById('journal-text').value='';
-  renderJournal();
-  await saveUserData();
+function saveJournalEntry() {
+  const text = document.getElementById('journal-text').value.trim();
+  if (!text) return;
+  state.journalEntries.unshift({ text, date: new Date().toLocaleDateString('fr-FR', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) });
+  document.getElementById('journal-text').value = '';
+  renderJournal(); scheduleSave();
 }
 
 function renderJournal() {
-  const el=document.getElementById('journal-entries');
-  if(!el) return;
-  el.innerHTML=userData.journal_entries.map(e=>`<div class="journal-entry"><div class="entry-date">✍️ ${e.date}</div><div class="entry-text">${e.text.replace(/\n/g,'<br>')}</div></div>`).join('');
+  const el = document.getElementById('journal-entries');
+  if (!el) return;
+  el.innerHTML = state.journalEntries.map(e => `<div class="journal-entry"><div class="entry-date">✍️ ${e.date}</div><div class="entry-text">${e.text.replace(/\n/g,'<br>')}</div></div>`).join('');
 }
 
-// ─── NOTES ───
-let selectedNoteType='💡 Astuce';
-const defaultNotes=[
-  {type:'💡 Astuce',text:'Toujours noter les préférences de pression dès la première séance. Les clients adorent que vous vous en souveniez !',color:'sticky-teal',rot:'-1.5deg'},
-  {type:'🌟 Conseil',text:'Investissez dans un bon diffuseur dès le début. L\'ambiance olfactive change tout à l\'expérience client.',color:'sticky-gold',rot:'1deg'},
-  {type:'💬 Témoignage',text:'Après 3 mois, j\'ai osé augmenter mes tarifs. Aucun client n\'est parti. La confiance vient de la qualité du soin.',color:'sticky-rose',rot:'-0.8deg'},
-];
-
+let selectedNoteType = '💡 Astuce';
 function selectNoteType(btn, type) {
-  selectedNoteType=type;
-  document.querySelectorAll('.note-type-btn').forEach(b=>b.classList.remove('active'));
+  selectedNoteType = type;
+  document.querySelectorAll('.note-type-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
 }
 
-async function addNote() {
-  const text=document.getElementById('note-text').value.trim();
-  if(!text) return;
-  const colors=['sticky-teal','sticky-gold','sticky-rose'];
-  const rots=['-2deg','-1deg','0.5deg','1.5deg'];
-  userData.notes.unshift({type:selectedNoteType,text,color:colors[Math.floor(Math.random()*3)],rot:rots[Math.floor(Math.random()*4)]});
-  document.getElementById('note-text').value='';
-  renderNotes();
-  await saveUserData();
+function addNote() {
+  const text = document.getElementById('note-text').value.trim();
+  if (!text) return;
+  const colors = ['sticky-teal','sticky-gold','sticky-rose'];
+  const rots = ['-2deg','-1deg','0.5deg','1.5deg','2deg','-0.5deg'];
+  state.notes.unshift({ type: selectedNoteType, text, color: colors[Math.floor(Math.random()*3)], rot: rots[Math.floor(Math.random()*rots.length)] });
+  document.getElementById('note-text').value = '';
+  renderNotes(); scheduleSave();
 }
 
 function renderNotes() {
-  const el=document.getElementById('notes-wall');
-  if(!el) return;
-  const allNotes=[...defaultNotes,...userData.notes];
-  el.innerHTML=allNotes.map(n=>`<div class="sticky-note ${n.color}" style="--rot:${n.rot}"><div class="sticky-label">${n.type}</div>${n.text}</div>`).join('');
+  const el = document.getElementById('notes-wall');
+  if (!el) return;
+  el.innerHTML = [...defaultNotes, ...state.notes].map(n => `<div class="sticky-note ${n.color}" style="--rot:${n.rot}"><div class="sticky-label">${n.type}</div>${n.text}</div>`).join('');
 }
-
-// ─── SHARE ───
-function copyLink() {
-  const input=document.getElementById('share-link');
-  input.select();
-  document.execCommand('copy');
-  event.target.textContent='✅ Copié !';
-  setTimeout(()=>event.target.textContent='📋 Copier',2000);
-}
-
-// ─── START ───
-checkSession();
 </script>
 </body>
 </html>
